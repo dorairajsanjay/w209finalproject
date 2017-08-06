@@ -8,6 +8,7 @@ body {
 h1 {
   font-family: "open sans", sans-serif;
   font-size: 16px;
+  fill: "#107896";
 }
 
 
@@ -22,20 +23,7 @@ svg {
   stroke: #fff;
   shape-rendering: crispEdges;
 }
-/*
-.axis line {
-    stroke: black;
-}
-.axis path {
-  fill: none;
-  stroke: red;
-  shape-rendering: crispEdges;
-}
 
-.axis text {
-  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
-}
-*/
 
 </style>
 
@@ -54,7 +42,8 @@ svg {
 var uc1=parallel_chart("#chart1");
 d3.csv("demo_food_data.csv", function(error, data) {
   if (error) throw error;
-  filtered = get_comparables(data, "cereal")
+//  filtered = get_comparables(data, "cereal")
+  filtered = find_and_rank_comparables(data, "42400240815", "sugars_100g");
   uc1.update(filtered);
   });
 
