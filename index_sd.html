@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>D3 Template</title>
+    <!--<link rel="stylesheet" href="css/style.css">
+	-->
+
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+</head>
+
+<body>
+
+    <h1 align="center"> Better Food Choices</h1>
+
+       <body>
+      <table width = "1000" border = "0">
+         
+         <tr valign = "top">
+            <td id="hos-panel"  width = "760">
+            </td>
+				
+            <td id="search-panel" width = "240">
+                <table>
+                    <tr>
+                        <td>
+                            <label  style="font-size:16px;font-weight: bold;"><br><br>Or search for a product name:</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input style="font-size:20px;border-style:solid;border-color:blue" type="text" id="search-text" placeholder="...">
+                            <div id="filteredList"></div>
+                            <script src="./papaparse.min.js"></script>
+                            <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+                            <script>
+
+                            /*********************************
+                            *    load data from file
+                            ***********************************/
+                            var data;
+                            
+                            function handleFileSelect(evt) {
+                                url = "http://localhost:8000/demo_food_data_search.csv";
+
+                                Papa.parse(url, {
+                                header: true,
+                                download:true,
+                                dynamicTyping: true,
+                                complete: function(results) {
+                                    data = results;
+                                    alert("done")
+
+                                    d3.select('#search-text').on('keyup', onFilter);
+                                }
+                                });
+                            }
+                            
+                            handleFileSelect();
+
+                            /*********************************
+                            *    search for matching data
+                            ***********************************/
+
+                            function onFilter(){
+
+                            var filterText = d3.select('#search-text').property('value');
+                            
+                            filteredData = data.data;
+                            if (filterText !== ""){
+                                var filteredData = data.data.filter(function(d){
+                                    filteredItems = d.product_name.indexOf(filterText);
+                                    return (filteredItems === 0);
+                                });
+                            }
+                            
+                            filteredData = filteredData.slice(0,4)
+                            d3.select('#filteredList').html(
+                                filteredData.map(function(d){
+                                return d.product_name;
+                                }).join(".<br/>")
+                            );
+                            }
+
+                            
+                            </script>
+                        </td>
+                    </tr>
+                </table>
+                
+            </td>
+         </tr>
+         
+      <table>
+   </body>
+
+    <script type="text/javascript">
+
+    var hos_data;
+    var hos_width = 1000;
+    var hos_height = 200;
+    var hos_barpadding = 2;
+
+    function drawHOS(svg,data)
+    {
+
+        var hosProducts= svg.append("g")
+                            .attr("id","hos-products") 
+
+        // hall of shame panel config
+        var hos_lastButton = null;
+        var hos_bWidth= 80; //button width
+        var hos_bHeight=80; //button height
+        var hos_bSpace= 2; //space between buttons
+        var hos_x0= 20; //x offset
+        var hos_y0= 20; //y offset
+        var hos_borderWidth= 1; // border thickness
+        var hos_borderColor = "blue";
+        var hos_focusBorderColor = "yellow";
+        var hos_focusBorderWidth = 4;
+
+        //groups for each button (which will hold a rect and text)
+        var buttonGroups= hosProducts.selectAll("g.button")
+                                .data(data)
+                                .enter()
+                                .append("g")
+                                .attr("class","button")
+                                .style("cursor","pointer")
+                                .on("click",function(d,i) {
+                                    updateButtonColors(d3.select(this), d3.select(this.parentNode));
+                                });
+
+        //adding a rect to each button group
+        //rx and ry give the rect rounded corner
+        buttonGroups.append("rect")
+                    .attr("class","buttonRect")
+                    .attr("width",hos_bWidth)
+                    .attr("height",hos_bHeight)
+                    .attr("x",function(d,i) {return hos_x0+(hos_bWidth+hos_bSpace)*i;})
+                    .attr("y",hos_y0)
+                    .attr("border",hos_borderWidth)
+                    .style("stroke", hos_borderColor)
+       			    .style("fill", "none")
+       			    .style("stroke-width", hos_borderWidth);
+                    
+        //adding image to each toggle button group 
+        buttonGroups.append("svg:image")
+            .attr("class","buttonImage")
+            .attr("x",function(d,i) {return hos_x0+(hos_bWidth+hos_bSpace)*i;})
+            .attr("y",hos_y0)
+            .attr("xlink:href", function(d) {return d.image_url;})
+            .attr("dominant-baseline","central")
+            .attr("fill","white")
+            .attr("width", hos_bWidth)
+            .attr("height", hos_bHeight);
+
+        function updateButtonColors(button, parent) 
+        {
+            if  (hos_lastButton == null){
+                hos_lastButton = button;
+            }
+            else{
+                hos_lastButton.select("rect")
+                    .style("stroke",hos_borderColor)
+       			    .style("stroke-width", hos_borderWidth);
+            }
+
+            button.select("rect")
+                    .style("stroke",hos_focusBorderColor)
+                    .style("stroke-width", hos_focusBorderWidth);
+                           
+            // save the last button
+            hos_lastButton = button;
+        }
+    }
+
+    // get data from the CSV file
+    //var url = "/~dorairajsanjay/sanjose_may2017_temp_noheader.csv";
+    var url = "/hos_noheader.csv";
+
+    var width = 760;
+    var height = 100
+
+    // create SVG element
+    var svg = d3.select("#hos-panel")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+    d3.csv(url, function(error, data) {
+        drawHOS(svg,data);
+        //drawSearchPanel(svg);
+
+    });
+
+
+
+    </script>
+</body>
+
+</html>
