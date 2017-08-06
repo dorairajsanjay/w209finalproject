@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Bar Chart v2</title>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+  </head>
+  <h1>Button Placeholder</h1>
+  <body>
+  
+  
+  <div>
+    <script type="text/javascript">
+      
+      //Canvas size and bar size
+      var canvasWidth = 600,
+          canvasHeight = 500,
+          otherMargins = canvasWidth * 0.1,
+          leftMargin = canvasWidth * 0.25,
+          maxBarWidth = canvasHeight - - otherMargins - leftMargin
+          maxChartHeight = canvasHeight - (otherMargins * 2);
+
+      //Create linear scale for data within chart area
+      var xScale = d3.scale.linear()
+                      .range([0, maxBarWidth]);
+
+      //Create ordinal scale for x variables
+      var yScale = d3.scale.ordinal();
+
+      //Append canvas
+      var chart = d3.select("body").append("svg")
+                                  .attr("width",canvasWidth)
+                                  .attr("height", canvasHeight);                       
+
+      //Create x axis               
+      var xAxis = d3.svg.axis()
+                  .scale(xScale)
+                  .orient("bottom")
+                  .ticks(0);
+
+      //Create y axis
+      var yAxis = d3.svg.axis()
+                  .scale(yScale)
+                  .orient("left")
+                  .ticks(0);
+
+      //Add data
+        d3.xhr("data.csv").get(function (error, response) {
+		
+          //Retrieve CSV
+		  var CSV = response.responseText;
+          var data = d3.csv.parse(CSV)
+              
+			  //Get variable names
+              var keys = d3.keys(data[0]);
+              var namesTitle = keys[2];
+              var valuesTitle = keys[12];
+
+              //Accessing the properties of each object with the variable name through its key
+			  //Convert value strings to numeric
+              var values = function(d) {return +d[valuesTitle];};
+              var names = function(d) {return d[namesTitle];}
+
+              //Find highest value
+              var maxValue = d3.max(data, values); 
+             
+              //Set x domain with max value
+              xScale.domain([0, maxValue]).nice(); 
+			  
+			  //Set y domain
+              yScale.domain(data.map(names));
+
+        //Set bar width with rangeBands ([x axis width], gap between bars, gap before and after bars) as a proportion of bar width  
+        yScale.rangeBands([0, maxChartHeight], 0.1, 0.5);
+        
+        //Set rect elements with attributes based on data
+        var rects = chart.selectAll("rect")
+                        .data(data)
+                        .enter()
+                        .append("rect");
+
+        //Set attributes of SVG rects based on attributes
+        var rectAttributes = rects
+                              .attr("x", leftMargin)
+                              .attr("y", function (d) {return yScale(d[namesTitle]) + otherMargins; })
+                              .attr("width", function (d) {return xScale(d[valuesTitle])})
+                              .attr("height", yScale.rangeBand())
+                              .attr("fill", "steelblue")
+                              .on("mouseover", function(d, i) {
+                                
+                                //Change fill on mouse
+                                d3.select(this)
+                                      .attr("fill", "orange");
+                                
+                                //Show data value on mouse
+                                var xPosition = (parseFloat(d3.select(this).attr("width")) + leftMargin + 6);
+                                var yPosition = parseFloat(d3.select(this).attr("y")) + (parseFloat(d3.select(this).attr("height")) / 2);
+                                chart.append("text")
+                                      .attr("id", "tooltip")
+                                      .attr("x", xPosition)
+                                      .attr("y", yPosition)
+                                      .attr("dy", "0.35em")
+                                      .attr("text-anchor", "start")
+                                      .attr("font-family", "sans-serif")
+                                      .attr("font-size", "12px")
+                                      .attr("font-weight", "bold")
+                                      .attr("fill", "black")
+                                      .text(d3.round(d[valuesTitle], 0));
+                              })
+                              
+                              //Transition on mouseout
+                              .on("mouseout", function(d) {
+                                d3.select(this)
+                                  .transition()
+                                  .duration(250)
+                                  .attr("fill", "steelblue");
+                                d3.select("#tooltip").remove();
+                              });
+
+        //Append x-axis
+        chart.append("g")
+              .attr("transform", "translate(" + leftMargin + ", " + (maxChartHeight + otherMargins) + ")")
+              .attr("text-anchor", "middle")
+              .attr("font-family", "sans-serif")
+              .attr("font-size", "12px")
+              .style("stroke", "black")
+              .style("fill", "none")
+              .style("stroke-width", 0)
+              .style("shape-rendering", "crispEdges")
+              .call(xAxis)
+                .selectAll("text")
+                .attr("stroke", "none")
+                .attr("fill", "black");
+
+        //Append y-axis
+        chart.append("g")
+              .attr("transform", "translate(" + leftMargin + ", " + otherMargins + ")")
+              .attr("text-anchor", "middle")
+              .attr("font-family", "sans-serif")
+              .attr("font-size", "12px")
+              .style("stroke", "black")
+              .style("fill", "none")
+              .style("stroke-width", 0)
+              .style("shape-rendering", "crispEdges")
+              .call(yAxis)
+              .selectAll(".tick text")
+                //.attr("dx", "-1.15em")
+				//.attr("dy", "-0.01em")
+                .attr("stroke", "none")
+                .attr("fill", "black")
+                .call(wrap, yScale.rangeBand()); //Call text wrap function
+        
+        //Chart border
+        var border = chart.append("rect")
+                          .attr("x", 0)
+                          .attr("y", 0)
+                          .attr("height", canvasHeight)
+                          .attr("width", canvasWidth)
+                          .style("stroke", "black")
+                          .style("fill", "none")
+                          .style("stroke-width", 1);
+
+        //Log in console for debugging
+        console.log(yAxis);
+
+      });
+      
+      //Label wrap function from "Wrapping Long Labels" - Mike Bostock
+      function wrap(text, width) {
+        text.each(function() {
+          var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, //em
+            y = text.attr("y"),
+			x = text.attr("x"),
+            dy = parseFloat(text.attr("dy")),
+            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+          while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > (4.5*width)) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            } 
+          }
+        })
+      }
+
+      //Turn strings into numbers on load
+      function type(d) {
+        d[yName] = +d[yName];
+        return d;
+
+      }
+
+    </script>
+	
+   </div>
+  </body>
+</html>
