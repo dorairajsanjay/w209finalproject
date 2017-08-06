@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<style>
+
+body {
+  background-color: #f0f0f0;
+}
+
+h1 {
+  font-family: "open sans", sans-serif;
+  font-size: 16px;
+  fill: "#107896";
+}
+
+
+/* CSS styling for Bostock chart */
+svg {
+  font: 10px sans-serif;
+}
+
+
+.brush .extent {
+  fill-opacity: .3;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+
+
+</style>
+
+<body>
+  <h1>Testing parallel coordinates chart for Food Project</h1>
+
+<svg id = "chart1" width="700" height="500"></svg>
+
+</body>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<script src="TS_parallel_chart.js"></script>
+
+<script>
+var uc1=parallel_chart("#chart1");
+d3.csv("demo_food_data.csv", function(error, data) {
+  if (error) throw error;
+//  filtered = get_comparables(data, "cereal")
+  filtered = find_and_rank_comparables(data, "42400240815", "sugars_100g");
+  uc1.update(filtered);
+  });
+
+</script>
