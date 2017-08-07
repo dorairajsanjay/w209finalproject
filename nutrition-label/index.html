@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Nutrition Label v4</title>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+  </head>
+  <body>
+  
+  
+
+  <img src="nutrition-facts-template.gif" />
+
+  
+</object>
+
+  <div>
+    <script type="text/javascript">
+      
+      //Canvas and bar sizes
+      var canvasWidth = 600,
+          canvasHeight = 500,
+          otherMargins = canvasWidth * 0.1,
+          leftMargin = canvasWidth * 0.25,
+          maxBarWidth = canvasHeight - - otherMargins - leftMargin
+          maxChartHeight = canvasHeight - (otherMargins * 2);
+
+      //add canvas to HTML
+      var chart = d3.select("body").append("svg")
+                                  .attr("width",canvasWidth)
+                                  .attr("height", canvasHeight);                       
+      //Add data
+        d3.xhr("data.csv").get(function (error, response) {
+		
+          //retrieve data
+		  var CSV = response.responseText;
+          var data = d3.csv.parse(CSV)
+              
+			  //get variable names
+              var keys = d3.keys(data[0]);
+              var product_nameTitle = keys[2];
+			  var serving_sizeTitle = keys[5];
+			  var energy_100gTitle = keys[10];
+			  var energyfromfat_100gTitle = keys[11];
+			  var fat_100gTitle = keys[12];
+			  var saturatedfat_100gTitle = keys[13];
+			  var monounsaturatedfat_100gTitle = keys[14];
+			  var polyunsaturatedfat_100gTitle = keys[15];
+			  var transfat_100gTitle = keys[20];
+			  var cholesterol_100gTitle = keys[21];
+			  var carbohydrates_100gTitle = keys[22];
+			  var sugars_100gTitle = keys[23];
+			  var sucrose_100gTitle = keys[24];
+			  var fiber_100gTitle = keys[30];
+			  var proteins_100gTitle = keys[31];
+			  var salt_100gTitle = keys[32];
+			  var sodium_100gTitle = keys[33];
+			  var alcohol_100gTitle = keys[34];
+			  var vitamina_100gTitle = keys[35];
+			  var betacarotene_100gTitle = keys[36];
+			  var vitamind_100gTitle = keys[37];
+			  var vitamine_100gTitle = keys[38];
+			  var vitamink_100gTitle = keys[39];
+			  var vitaminc_100gTitle = keys[40];
+			  var vitaminb1_100gTitle = keys[41];
+			  var vitaminb2_100gTitle = keys[42];
+			  var vitaminpp_100gTitle = keys[43];
+			  var vitaminb6_100gTitle = keys[44];
+			  var vitaminb9_100gTitle = keys[45];
+			  var folates_100gTitle = keys[46];
+			  var vitaminb12_100gTitle = keys[47];
+			  var bicarbonate_100gTitle = keys[48];
+			  var potassium_100gTitle = keys[49];
+			  var chloride_100gTitle = keys[50];
+			  var calcium_100gTitle = keys[51];
+			  var iron_100gTitle = keys[52];
+
+              //accessing the properties of each object with the variable name through its key
+              var names = function(d) {return d[product_name];};
+              var serving_size = function(d) {return +d[serving_sizeTitle];};
+			  var energy_100g = function(d) {return +d[energy_100gTitle];};
+			  var energyfromfat_100g = function(d) {return +d[energyfromfat_100gTitle];};
+			  var fat_100g = function(d) {return +d[fat_100gTitle];};
+			  var saturatedfat_100g = function(d) {return +d[saturatedfat_100gTitle];};
+			  var monounsaturatedfat_100g = function(d) {return +d[monounsaturatedfat_100gTitle];};
+			  var polyunsaturatedfat_100g = function(d) {return +d[polyunsaturatedfat_100gTitle];};
+			  var transfat_100g = function(d) {return +d[transfat_100gTitle];};
+			  var cholesterol_100g = function(d) {return +d[cholesterol_100gTitle];};
+			  var carbohydrates_100g = function(d) {return +d[carbohydrates_100gTitle];};
+			  var sugars_100g = function(d) {return +d[sugars_100gTitle];};
+			  var sucrose_100g = function(d) {return +d[sucrose_100gTitle];};
+			  var fiber_100g = function(d) {return +d[fiber_100gTitle];};
+			  var proteins_100g = function(d) {return +d[proteins_100gTitle];};
+			  var salt_100g = function(d) {return +d[salt_100gTitle];};
+			  var sodium_100g = function(d) {return +d[sodium_100gTitle];};
+			  var alcohol_100g = function(d) {return +d[alcohol_100gTitle];};
+			  var vitamina_100g = function(d) {return +d[vitamina_100gTitle];};
+			  var betacarotene_100g = function(d) {return +d[betacarotene_100gTitle];};
+			  var vitamind_100g = function(d) {return +d[vitamind_100gTitle];};
+			  var vitamine_100g = function(d) {return +d[vitamine_100gTitle];};
+			  var vitamink_100g = function(d) {return +d[vitamink_100gTitle];};
+			  var vitaminc_100g = function(d) {return +d[vitaminc_100gTitle];};
+			  var vitaminb1_100g = function(d) {return +d[vitaminb1_100gTitle];};
+			  var vitaminb2_100g = function(d) {return +d[vitaminb2_100gTitle];};
+			  var vitaminpp_100g = function(d) {return +d[vitaminpp_100gTitle];};
+			  var vitaminb6_100g = function(d) {return +d[vitaminb6_100gTitle];};
+			  var vitaminb9_100g = function(d) {return +d[vitaminb9_100gTitle];};
+			  var folates_100g = function(d) {return +d[folates_100gTitle];};
+			  var vitaminb12_100g = function(d) {return +d[vitaminb12_100gTitle];};
+			  var bicarbonate_100g = function(d) {return +d[bicarbonate_100gTitle];};
+			  var potassium_100g = function(d) {return +d[potassium_100gTitle];};
+			  var chloride_100g = function(d) {return +d[chloride_100gTitle];};
+			  var calcium_100g = function(d) {return +d[calcium_100gTitle];};
+			  var iron_100g = function(d) {return +d[iron_100gTitle];};
+
+
+});
+    </script>
+	
+   </div>
+  </body>
+</html>
