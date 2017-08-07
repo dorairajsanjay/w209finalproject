@@ -33,6 +33,7 @@ function drawHOS(svg,data)
                             .style("cursor","pointer")
                             .on("click",function(d,i) {
                                 updateButtonColors(d3.select(this), d3.select(this.parentNode));
+                                alert(d.code);
                             });
 
     //adding a rect to each button group
