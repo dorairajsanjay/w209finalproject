@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<head>
+
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+
+  <style>
+    h1 {
+      margin: 0px 0px 15px 20px;
+      font-family: sans-serif;
+    }
+
+    .bar {
+      fill: #29ABE2;
+    }
+
+    .bar:hover {
+      fill: orange;
+    }
+
+    .label {
+      fill: black;
+      font: 12px sans-serif;
+    }
+
+    .y path, .y stroke, .y line {
+      display: none;
+    }
+
+    .x path, .x stroke {
+      display: none;
+    }	
+
+  </style>
+
+</head>
+
+<body>
+
+
+  <script>
+
+    var margin = {
+        top: 20,
+        right: 20,
+        bottom: 30,
+        left: 180
+      };
+	var leftMargin = margin.left;
+    var width = 960 - margin.left - margin.right;
+    var height = 500 - margin.top - margin.bottom;
+	var maxBarWidth = height - margin.left;
+    var maxChartHeight = height - (margin.top + margin.bottom);
+	
+	//Assume measure is fat_100g for testing
+	//Will change on button click
+	var measure = "fat_100g";
+	
+	//Creates rounding for tooltips
+	var formatter = d3.format("d");
+	
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
+    //Create linear scale for data within chart area
+    var xScale = d3.scaleLinear()
+                .range([0, maxBarWidth]);
+
+	//Set bar width with rangeBands ([x axis width], gap between bars, gap before and after bars) as a proportion of bar width  
+	//yScale.rangeBands([0, maxChartHeight], 0.1, 0.5);
+	
+    //Create ordinal scale for x variables
+    var yScale = d3.scaleBand()
+				 .domain([0, maxChartHeight]);
+	  
+    var x = d3.scaleLinear()
+          .range([0, width]);
+
+    var y = d3.scaleBand()
+        .range([height, 0]);
+
+    var xAxis = d3.axisBottom(x)
+        .ticks(0);
+
+    var yAxis = d3.axisLeft(y);
+
+    d3.csv("demo_food_data.csv", type, function(error, data) {
+      if (error) throw error;
+
+      data.sort(function(a, b) {
+        return a[measure] - b[measure];
+      });
+
+      x.domain([0, d3.max(data, function(d) { return d[measure]; })]);
+
+      y.domain(data.map(function(d) { return d.product_name; }))
+        .paddingInner(0.1);
+				  
+      var rects = svg.selectAll(".bar")
+			.data(data)
+        .enter().append("rect")
+          .attr("class", "bar")
+          .attr("x", 0)
+          .attr("height", y.bandwidth())
+          .attr("y", function(d) { return y(d.product_name); })
+          .attr("width", function(d) { return x(d[measure]); });
+		  
+	  //Append x axis
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + -2 + ")")
+		  .style("stroke-width", 0)
+          .call(xAxis);
+	
+	  //Append y axis
+      svg.append("g")
+          .attr("class", "y axis")
+		  //.attr("dy", "0.35em")
+		  .style("font-size", "12px")
+          .call(yAxis)
+          .selectAll(".tick text")
+                .attr("stroke", "none")
+                .attr("fill", "black")
+                .call(wrap, leftMargin);
+
+        //Set attributes of SVG rects based on attributes
+        var rectAttributes = rects
+                              .on("mouseover", function(d, i) {
+                                
+                                //Show data value on mouse
+                                var xPosition = (parseFloat(d3.select(this).attr("width")) + 6);
+                                var yPosition = parseFloat(d3.select(this).attr("y")) + (parseFloat(d3.select(this).attr("height")) / 2);
+                                svg.append("text")
+                                      .attr("id", "tooltip")
+                                      .attr("x", xPosition)
+                                      .attr("y", yPosition)
+                                      .attr("dy", "0.35em")
+                                      .attr("text-anchor", "start")
+                                      .attr("font-family", "sans-serif")
+                                      .attr("font-size", "12px")
+                                      .attr("font-weight", "bold")
+                                      .attr("fill", "black")
+                                      .text(formatter(d[measure]));
+                              })
+                              
+                              //Transition on mouseout
+                              .on("mouseout", function(d) {
+                                d3.select(this)
+									d3.select("#tooltip").remove();
+                              });		  
+		  		  
+    });
+	
+	   //Label wrap function from "Wrapping Long Labels" - Mike Bostock
+      function wrap(text, width) {
+	  console.log(text);
+        text.each(function() {
+          var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, //em
+            y = text.attr("y"),
+			x = text.attr("x"),
+            dy = parseFloat(text.attr("dy")),
+            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+			console.log(words);
+          while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            } 
+          }
+        })
+      }
+
+    function type(d) {
+      d.measure = +d.measure;
+      return d;
+    }
+
+  </script>
+
+</body>
