@@ -19,6 +19,11 @@ function drawHOS(svg,data)
     var hos_focusBorderColor = "yellow";
     var hos_focusBorderWidth = 4;
 
+    // filter elements from product set for HOS panel
+    data = data.filter(function(d) {
+        if (d.hos == 1) return d;
+    })
+
     //groups for each button (which will hold a rect and text)
     var buttonGroups= hosProducts.selectAll("g.button")
                             .data(data)
