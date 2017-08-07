@@ -1,7 +1,7 @@
 /********************************
  * Create the Hall of Shame panel
  *********************************/
-function drawHOS(svg,data)
+function drawHOS(svg)
 {
 
     var hosProducts= svg.append("g")
@@ -20,7 +20,7 @@ function drawHOS(svg,data)
     var hos_focusBorderWidth = 4;
 
     // filter elements from product set for HOS panel
-    data = data.filter(function(d) {
+    data = data.data.filter(function(d) {
         if (d.hos == 1) return d;
     })
 
@@ -33,7 +33,13 @@ function drawHOS(svg,data)
                             .style("cursor","pointer")
                             .on("click",function(d,i) {
                                 updateButtonColors(d3.select(this), d3.select(this.parentNode));
-                                alert(d.code);
+
+                                $("#chart1").empty();
+                                // update left charts panel
+                                var uc1=parallel_chart("#chart1");
+                                filtered = find_and_rank_comparables(data, d.code, "sugars_100g");
+                                uc1.update(filtered);       
+
                             });
 
     //adding a rect to each button group

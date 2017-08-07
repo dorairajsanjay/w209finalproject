@@ -1,20 +1,3 @@
-/*********************************
-*    load data for search panel
-***********************************/
-
-function handleFileSelect(evt) {
-    url = "http://localhost:8080/demo_food_data_sd.csv";
-
-    Papa.parse(url, {
-        header: true,
-        download:true,
-        dynamicTyping: true,
-        complete: function(results) {
-            data = results;
-            d3.select('#search-text').on('keyup', processSearchKey);
-        }
-    });
-}
 
 /*********************************
 *    process key operations on search
@@ -25,7 +8,12 @@ function processSearchKey(){
 
     filterText = d3.select('#search-text').property('value');
     if (keyCode == 13) {
-        alert(onFilter(filterText));
+            // initialize left charts panel
+            var productCode = onFilter(filterText);
+            $("#chart1").empty();
+            var uc1=parallel_chart("#chart1");
+            filtered = find_and_rank_comparables(data, productCode, "sugars_100g");
+            uc1.update(filtered);       
     }
     else{
         onFilter(filterText);
@@ -39,12 +27,12 @@ function processSearchKey(){
 
 function onFilter(filterText){
 
-    filteredData = data.data;
+    filteredData = data;
     var filteredData;
 
     // if products need to be filtered based on user input, then do that here
     if (filterText !== ""){
-        var filteredData = data.data.filter(function(d){
+        var filteredData = data.filter(function(d){
             filteredItems = d.product_name.indexOf(filterText);
             return (filteredItems === 0);
         });

@@ -215,8 +215,9 @@ function find_and_rank_comparables(data, productid, criteria) {
 
     // scan through data to find what the category is the for selected productid
     var eval_count = data.length;
+    var cat_filter;
     for (var i = 0; i < eval_count; i++) {
-        if (data[i].code === productid) {cat_filter = data[i].demo_cat;};
+        if (data[i].code == productid) {cat_filter = data[i].demo_cat;};
         };
 
     // now go through and select all the objects that match the category
@@ -224,9 +225,9 @@ function find_and_rank_comparables(data, productid, criteria) {
     var filtered = [];
     var comp_count = 0;
     for (var i = 0; i < eval_count; i++) {
-        if (data[i].demo_cat === cat_filter) {
+        if (data[i].demo_cat == cat_filter) {
             comp_count += 1;
-            if (data[i].code === productid) {
+            if (data[i].code == productid) {
                 data[i].selected = 1;}
             else {
                 data[i].selected = 0;
