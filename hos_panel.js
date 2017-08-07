@@ -15,8 +15,8 @@ function drawHOS(svg)
     var hos_x0= 20; //x offset
     var hos_y0= 20; //y offset
     var hos_borderWidth= 1; // border thickness
-    var hos_borderColor = "blue";
-    var hos_focusBorderColor = "yellow";
+    var hos_borderColor = "#29ABE2";
+    var hos_focusBorderColor = "#29ABE2";
     var hos_focusBorderWidth = 4;
 
     // filter elements from product set for HOS panel
