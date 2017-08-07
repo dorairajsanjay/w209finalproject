@@ -5,8 +5,7 @@
     <title>Better Food Choices</title>
     <!--<link rel="stylesheet" href="css/style.css">
 	-->
-
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src=base_url"http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
     <script src="http://localhost:8080/hos_panel.js"></script>
@@ -15,6 +14,9 @@
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="http://localhost:8080/TS_parallel_chart.js"></script>
     <script src="http://localhost:8080/load_data.js"></script>
+    <script>
+        var url = "http://localhost:8080/demo_food_data_sd.csv";
+    </script>
 </head>
 
 <body>
@@ -63,9 +65,6 @@
     var hos_data;
     var hos_width = 760;
     var hos_height = 100;
-
-    // get hall of shame entries from CSV file
-    var url = "http://localhost:8080/demo_food_data_sd.csv";
 
     // create SVG element
     var svg = d3.select("#hos-panel")
