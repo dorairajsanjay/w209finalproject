@@ -21,6 +21,9 @@ function loadUSDAData(evt) {
             var uc1=parallel_chart("#chart1");
             filtered = find_and_rank_comparables(data.data, "72030015712", "sugars_100g");
             uc1.update(filtered);       
+
+            // update search text with value
+            document.getElementById('search-text').value = "Frosted Donuts";
         }
     });
 }
