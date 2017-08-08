@@ -5,7 +5,7 @@ function drawHOS(svg)
 {
 
     var hosProducts= svg.append("g")
-                        .attr("id","hos-products") 
+                        .attr("id","hos-products")
 
     // hall of shame panel config
     var hos_lastButton = null;
@@ -20,13 +20,15 @@ function drawHOS(svg)
     var hos_focusBorderWidth = 4;
 
     // filter elements from product set for HOS panel
-    data = data.data.filter(function(d) {
+    var hosData = data.data.filter(function(d) {
         if (d.hos == 1) return d;
     })
 
+    var fullData = data.data
+
     //groups for each button (which will hold a rect and text)
     var buttonGroups= hosProducts.selectAll("g.button")
-                            .data(data)
+                            .data(hosData)
                             .enter()
                             .append("g")
                             .attr("class","button")
@@ -37,8 +39,9 @@ function drawHOS(svg)
                                 $("#chart1").empty();
                                 // update left charts panel
                                 var uc1=parallel_chart("#chart1");
-                                filtered = find_and_rank_comparables(data, d.code, "sugars_100g");
-                                uc1.update(filtered);       
+                                console.log("At button click, d.code is", d.code)
+                                filtered = find_and_rank_comparables(fullData, d.code, "sugars_100g");
+                                uc1.update(filtered);
 
                             });
 
@@ -54,8 +57,8 @@ function drawHOS(svg)
                 .style("stroke", hos_borderColor)
                 .style("fill", "none")
                 .style("stroke-width", hos_borderWidth);
-                
-    //adding image to each toggle button group 
+
+    //adding image to each toggle button group
     buttonGroups.append("svg:image")
         .attr("class","buttonImage")
         .attr("x",function(d,i) {return hos_x0+(hos_bWidth+hos_bSpace)*i;})
@@ -79,10 +82,8 @@ function drawHOS(svg)
         button.select("rect")
                 .style("stroke",hos_focusBorderColor)
                 .style("stroke-width", hos_focusBorderWidth);
-                        
+
         // save the last button
         hos_lastButton = button;
     }
 }
-
-
