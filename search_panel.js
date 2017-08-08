@@ -12,7 +12,7 @@ function processSearchKey(){
             var productCode = onFilter(filterText);
             $("#chart1").empty();
             var uc1=parallel_chart("#chart1");
-            filtered = find_and_rank_comparables(data, productCode, "sugars_100g");
+            filtered = find_and_rank_comparables(data.data, productCode, "sugars_100g");
             uc1.update(filtered);       
     }
     else{
