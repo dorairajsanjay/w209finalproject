@@ -24,6 +24,7 @@ function drawHOS(svg)
         if (d.hos == 1) return d;
     })
 
+    // identify FULL data list for passing to find_and_rank_comparables
     var fullData = data.data
 
     //groups for each button (which will hold a rect and text)
@@ -35,7 +36,6 @@ function drawHOS(svg)
                             .style("cursor","pointer")
                             .on("click",function(d,i) {
                                 updateButtonColors(d3.select(this), d3.select(this.parentNode));
-
                                 $("#chart1").empty();
                                 // update left charts panel
                                 var uc1=parallel_chart("#chart1");
