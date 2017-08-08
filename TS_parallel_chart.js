@@ -13,19 +13,24 @@ pic = {}; // create object for function to return
 // para is for the part of the chart with the parallel chart
 
 var frame = d3.select(eleID),
-    margin = {top: 75, right: 10, bottom: 75, left: 10},
+    margin = {top: 75, right: 10, bottom: 10, left: 10},
     width = +frame.attr("width"),
     height = +frame.attr("height"),
-    para_w_proportion = .5, // proportion of frame for parallels
+    para_w_proportion = .6, // proportion of frame for parallels
     para_width = width * para_w_proportion,
-    para_height = height  - margin.bottom
+    para_height = height  - margin.bottom,
+    legend_rect = {big: 18, small:12},
+    legend_text = {dx:25, dy:10},
+    legend_text_width = width - para_width - legend_rect.big - legend_text.dx,
+    line_width = {highlight: 5, regular:2}
 
 var x = d3.scalePoint().range([margin.left, para_width]).padding(0.25),
     y = {}
 
 
 var line = d3.line(),
-    axis = d3.axisLeft(),
+    axis = d3.axisLeft()
+        .ticks(5),  // don't need a very precisely marked scale
     background,
     foreground;
 
@@ -56,19 +61,30 @@ pic.update = function(data) {
         .attr("class", "dimension")
         .attr("transform", function(d) { return "translate(" + x(d) + ")"; });
 
-    // Add an axis and title.
+    // Add an axis and title.  Style the text labels at the to
     g.append("g")
         .attr("class", "axis")
         .each(function(d) { d3.select(this).call(axis.scale(y[d])); })
-      .append("text")
-        .style("text-anchor", "start")
+      .append("text") // add the text labels at the top
+        .style("text-anchor", "start")  //
         .text(function(d) { return d.substring(0, d.indexOf("_"));})
-        .attr("dy", -10)
+        .attr("dy", -15)
         .attr("stroke", "none")
-        .attr("fill", "#131516")  // very dark gray, but not black
         .attr("font-size", "16px")
         .attr("font-weight", "bold")
         .attr("transform", "translate(0,"+margin.top+") rotate(-45)");
+
+    // Style the main axis lines
+    g.selectAll("path")
+        .style("stroke", "#bdbdbd")  // mid gray
+
+    // Style the axis tick mark lines
+    g.selectAll("line")
+        .style("stroke", "#bdbdbd")
+
+    // Style the axis tick labels and heading
+    g.selectAll("text")
+        .style("fill", "#131516") // very dark gray, but not black
 
     // Draw the colored lines for each product
     foreground = svg.append("g")
@@ -82,11 +98,11 @@ pic.update = function(data) {
                 return get_parallel_color(d)})
         .attr("stroke-width", function(d) {
             if (d.selected === 1) {
-                return 6;
+                return line_width.highlight;
             } else if (d.recommended === 1) {
-                return 6;
+                return line_width.highlight;
             } else {
-                return 3;
+                return line_width.regular;
             };
         })
         .attr("stroke-linejoin", "round")
@@ -107,6 +123,8 @@ pic.update = function(data) {
         .attr("font-family", "sans-serif")
         .attr("font-size", 12)
         .attr("text-anchor", "start")
+        .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
+        .attr("font-weight", "bold")
       .selectAll("g")
       .data(data)
       .enter().append("g")
@@ -115,25 +133,25 @@ pic.update = function(data) {
 
     // add text
     legend.append("text")
-        .attr("dy", "10")
-        .attr("dx", "25")
-        .attr("fill", "#131516")  // very dark gray, but not black)
-        .text(function(d) { return d.product_name; });
+        .attr("dx", legend_text.dx)
+        .attr("dy", legend_text.dy)
+        .text(function(d) { return d.product_name; })
+        .call(wrap_parallels, legend_text_width);
 
     // add colored squares
     legend.append("rect")
         .attr("width", function(d) {
             if (d.selected ===1 || d.recommended ===1){
-                return 18;
+                return legend_rect.big;
             } else {
-                return 12;
+                return legend_rect.small;
             };
         })
         .attr("height", function(d) {
             if (d.selected ===1 || d.recommended ===1){
-                return 18;
+                return legend_rect.big;
             } else {
-                return 12;
+                return legend_rect.small;
             };
         })
         .attr("fill", function(d) {return get_parallel_color(d)});
@@ -262,3 +280,33 @@ function find_and_rank_comparables(data, productid, criteria) {
     console.log(filtered);
     return filtered;
 };
+
+
+//Label wrap function from "Wrapping Long Labels" - Mike Bostock
+function wrap_parallels(text, width) {
+console.log(text);
+ text.each(function() {
+   var text = d3.select(this),
+     words = text.text().split(/\s+/).reverse(),
+     word,
+     line = [],
+     lineNumber = 0,
+     lineHeight = 1.1, //em
+     y = text.attr("y"),
+     x = text.attr("x"),
+     dx = parseFloat(text.attr("dx")),
+     dy = parseFloat(text.attr("dy")),
+     tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dx", dx).attr("dy", dy);
+     console.log(words);
+   while (word = words.pop()) {
+     line.push(word);
+     tspan.text(line.join(" "));
+     if (tspan.node().getComputedTextLength() > width) {
+       line.pop();
+       tspan.text(line.join(" "));
+       line = [word];
+       tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dx", dx).attr("dy", ++lineNumber * lineHeight + dy).text(word);
+     }
+   }
+ })
+}
