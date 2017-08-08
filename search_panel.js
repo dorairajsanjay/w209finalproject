@@ -32,7 +32,7 @@ function onFilter(filterText){
 
     // if products need to be filtered based on user input, then do that here
     if (filterText !== ""){
-        var filteredData = data.filter(function(d){
+        var filteredData = data.data.filter(function(d){
             filteredItems = d.product_name.indexOf(filterText);
             return (filteredItems === 0);
         });
