@@ -27,8 +27,7 @@ function processSearchKey(){
 
 function onFilter(filterText){
 
-    filteredData = data;
-    var filteredData;
+    var filteredData;  
 
     // if products need to be filtered based on user input, then do that here
     if (filterText !== ""){
