@@ -36,12 +36,16 @@ function drawHOS(svg)
                             .style("cursor","pointer")
                             .on("click",function(d,i) {
                                 updateButtonColors(d3.select(this), d3.select(this.parentNode));
-                                $("#chart1").empty();
+
                                 // update left charts panel
+                                $("#chart1").empty();
                                 var uc1=parallel_chart("#chart1");
                                 console.log("At button click, d.code is", d.code)
                                 filtered = find_and_rank_comparables(fullData, d.code, "sugars_100g");
                                 uc1.update(filtered);
+
+                                // update search text with value
+                                document.getElementById('search-text').value = d.product_name;
 
                             });
 

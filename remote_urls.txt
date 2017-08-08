@@ -7,6 +7,14 @@
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="http://54.165.168.158/w209finalproject/TS_parallel_chart.js"></script>
     <script src="http://54.165.168.158/w209finalproject/load_data.js"></script>
+    <script src="http://54.165.168.158/w209finalproject/option_buttons.js"></script>
     <script>
         var url = "http://54.165.168.158//w209finalproject/demo_food_data_sd.csv";
+        
+        // bfc stands for better food choices
+        var bfc_context = {  
+            selected_main_button :null,
+            selected_sv_button :null,
+            selected_av_button :null
+        };
     </script>

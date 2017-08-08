@@ -14,12 +14,63 @@
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="http://localhost:8080/TS_parallel_chart.js"></script>
     <script src="http://localhost:8080/load_data.js"></script>
+    <script src="http://localhost:8080/option_buttons.js"></script>
     <script>
         var url = "http://localhost:8080/demo_food_data_sd.csv";
+        
+        // bfc stands for better food choices
+        var bfc_context = {  
+            selected_main_button :null,
+            selected_sv_button :null,
+            selected_av_button :null
+    };
     </script>
 </head>
 
 <body>
+    <style>
+        .main_button {
+            background-color: #29ABE2;
+            color: white;
+            padding: 8px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border: 2px solid;
+            border-radius: 25px;
+            width: 347px;
+        }
+        .sv_button {
+            background-color: #29ABE2;
+            color: white;
+            padding: 8px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border: 2px solid;
+            border-radius: 25px;
+        }
+
+        .table td, .table th {
+            height: 32px;
+        }
+
+        .inactive {
+            background-color: white;  
+            color: #29ABE2;
+            }
+
+        .active {
+            background-color: #29ABE2;
+            color: white;
+            }
+    </style>
 
     <h1 align="center"> Better Food Choices</h1>
 
@@ -53,7 +104,32 @@
          </tr>
         <tr>
             <td>
-                <<svg id = "chart1" width="700" height="500"></svg>
+                <table>
+                    <tr>
+                        <td>
+                            <button type="button" id="sv-main" class="main_button inactive" onclick="optionButtonSelected(this.id)" >Simple View</button>
+                            <button type="button"  id="av-main" class="main_button inactive" onclick="optionButtonSelected(this.id)">Advanced View - multiple measures</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                                <button type="button"  id="sv-fat" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Fat</button>
+                                <button type="button"  id="sv-sugars" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Sugars</button>
+                                <button type="button"  id="sv-proteins" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Proteins</button>     
+                                <button type="button"  id="sv-sodium" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Sodium</button>     
+                                <button type="button"  id="sv-fiber" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Fiber</button>  
+                        </td>
+                        
+                        <script>
+                            initOptionButtons();
+                        </script>
+                    </tr>
+                    <tr>
+                        <td>
+                            <<svg id = "chart1" width="700" height="500"></svg>
+                        </td>
+                    </tr>
+                </table>            
 
             </td>
         </tr>
@@ -62,6 +138,10 @@
    </body>
 
     <script>
+
+
+
+    // other variables
     var hos_data;
     var hos_width = 780;
     var hos_height = 100;
