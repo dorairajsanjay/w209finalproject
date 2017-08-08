@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+  <style>
+    h1 {
+      margin: 0px 0px 15px 20px;
+      font-family: sans-serif;
+    }
+
+    .bar:hover {
+      fill: orange;
+    }
+
+    .label {
+      fill: black;
+      font: 12px sans-serif;
+    }
+
+    .y path, .y stroke, .y line {
+      display: none;
+    }
+
+    .x path, .x stroke {
+      display: none;
+    }	
+	
+	#measureOptions {
+		font: 14px sans-serif;
+	}
+
+  </style>
+
+<title>Testing Bar Chart</title>
+
+<body>
+<div>
+<form id="measureOptions" name="measureOptions">
+  <input value="fat_100g" type="radio" name="measure" checked>Fat
+  <input value="energy_100g" type="radio" name="measure">Calories
+  <input value="sodium_100g" type="radio" name="measure">Sodium
+  <input value="sugars_100g" type="radio" name="measure">Sugar
+  <input value="cholesterol_100g" type="radio" name="measure">Cholesterol
+  <input value="proteins_100g" type="radio" name="measure">Protein
+</form>
+</div>
+
+<svg id = "chart1" width="700" height="500"></svg>
+
+</body>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<script src="bar_chart.js"></script>
+
+
+<script>
+var measure="energy_100g";
+
+var measureOptions = document.getElementById('measureOptions');
+measureOptions.onclick = function(i) {        
+    var measure = i.target.value;
+	console.log(measure);
+	barChart.update(filtered, measure);
+	return measure;
+};
+
+var barChart=bar_chart("#chart1", measure);
+
+d3.csv("demo_food_data.csv", function(error, data) {
+	  if (error) throw error;
+	  filtered = find_and_rank_comparables(data, "42400240815", measure);
+	  barChart.update(filtered, measure);
+	  });
+
+</script>
+
+
