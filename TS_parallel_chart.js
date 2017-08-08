@@ -70,8 +70,6 @@ pic.update = function(data) {
         .attr("font-weight", "bold")
         .attr("transform", "translate(0,"+margin.top+") rotate(-45)");
 
-    console.log("data ordered for plot")
-    console.log(order_for_plot(data))
     // Draw the colored lines for each product
     foreground = svg.append("g")
         .attr("class", "foreground")
@@ -198,7 +196,7 @@ function order_for_plot(data) {
             ordered.push(data[i])
         };
     };
-    if (selected_is_recommended = 1) {
+    if (selected_is_recommended === 1) {
         ordered.push(selected);
     } else {
         ordered.push(recommended);
