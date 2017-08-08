@@ -11,7 +11,7 @@ function drawHOS(svg)
     var hos_lastButton = null;
     var hos_bWidth= 80; //button width
     var hos_bHeight=80; //button height
-    var hos_bSpace= 2; //space between buttons
+    var hos_bSpace= 3; //space between buttons
     var hos_x0= 20; //x offset
     var hos_y0= 20; //y offset
     var hos_borderWidth= 1; // border thickness
