@@ -17,9 +17,9 @@
     <script src="http://localhost:8080/option_buttons.js"></script>
     <script>
         var url = "http://localhost:8080/demo_food_data_sd.csv";
-        
+
         // bfc stands for better food choices
-        var bfc_context = {  
+        var bfc_context = {
             selected_main_button :null,
             selected_sv_button :null,
             selected_av_button :null
@@ -62,7 +62,7 @@
         }
 
         .inactive {
-            background-color: white;  
+            background-color: white;
             color: #29ABE2;
             }
 
@@ -76,11 +76,11 @@
 
        <body>
       <table width = "1020" border = "0">
-         
+
          <tr valign = "top">
             <td id="hos-panel"  width = "780">
             </td>
-				
+
             <td id="search-panel" width = "240">
                 <table>
                     <tr>
@@ -99,7 +99,7 @@
                         </script>
                     </td>
                     </tr>
-                </table>              
+                </table>
             </td>
          </tr>
         <tr>
@@ -115,25 +115,25 @@
                         <td>
                                 <button type="button"  id="sv-fat" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Fat</button>
                                 <button type="button"  id="sv-sugars" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Sugars</button>
-                                <button type="button"  id="sv-proteins" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Proteins</button>     
-                                <button type="button"  id="sv-sodium" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Sodium</button>     
-                                <button type="button"  id="sv-fiber" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Fiber</button>  
+                                <button type="button"  id="sv-proteins" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Proteins</button>
+                                <button type="button"  id="sv-sodium" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Sodium</button>
+                                <button type="button"  id="sv-fiber" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Fiber</button>
                         </td>
-                        
+
                         <script>
                             initOptionButtons();
                         </script>
                     </tr>
                     <tr>
                         <td>
-                            <<svg id = "chart1" width="700" height="500"></svg>
+                            <<svg id = "chart1" width="600" height="400"></svg>
                         </td>
                     </tr>
-                </table>            
+                </table>
 
             </td>
         </tr>
-         
+
       <table>
    </body>
 
