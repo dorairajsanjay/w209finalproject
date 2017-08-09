@@ -41,7 +41,7 @@
             cursor: pointer;
             border: 2px solid;
             border-radius: 25px;
-            width: 347px;
+            width: 275px;
         }
         .sv_button {
             background-color: #29ABE2;
@@ -75,9 +75,9 @@
     <h1 align="center"> Better Food Choices</h1>
 
        <body>
-      <table width = "1200" border = "0">
+      <table  width= "1200" border = "0">
 
-         <tr valign = "top">
+         <tr valign = "top" >
             <td id="hos-panel"  width = "760">
             </td>
 
@@ -103,8 +103,9 @@
             </td>
          </tr>
         <tr>
+            <table width = "1200">
             <td>
-                <table>
+                <table width = "600">
                     <tr>
                         <td>
                             <button type="button" id="sv-main" class="main_button inactive" onclick="optionButtonSelected(this.id)" >Simple View</button>
@@ -126,14 +127,22 @@
                     </tr>
                     <tr>
                         <td>
-                            <<svg id = "chart1" width="600" height="400"></svg>
+                            <svg id = "chart1" width="600" height="400"></svg>
                         </td>
                     </tr>
                 </table>
-
             </td>
+            <td>
+                <table width = "600">
+                    <tr>
+                        <td>
+                            <svg id = "nutfact_panel" width="600" height="500"></svg>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </table>
         </tr>
-
       <table>
    </body>
 
