@@ -44,6 +44,11 @@ function drawHOS(svg)
                                 filtered = find_and_rank_comparables(fullData, d.code, "sugars_100g");
                                 uc1.update(filtered);
 
+                                // update nutrition facts panel
+                                $("#nutfacts_panel").empty();
+                                var uc2=nutrition_facts("#nutfacts_panel");
+                                uc2.update(filtered);
+
                                 // update search text with value
                                 document.getElementById('search-text').value = d.product_name;
 
