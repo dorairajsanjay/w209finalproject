@@ -19,21 +19,63 @@ var side_padding = 30,
     vert_padding = 10
     top_row_height = 100;
 
+
+
 // Main method that can be called to draw the chart given some data
-pic.update = function(data) {
+pic.update = function(data, criteria) {
 
-    // var wanted = ["fat_100g", "sugars_100g", "proteins_100g", "sodium_100g",
-    //               "fiber_100g"]
-
-    console.log("I am at the start of updating nutrition facts");
-
-    console.log("extracting");
     console.log(extract_one(data, "recommended"));
 
-    draw_nf(nut_frame, side_padding, top_row_height + vert_padding,
-            extract_one(data, "selected"));
-    draw_nf(nut_frame, width/2 + side_padding, top_row_height + vert_padding,
-            extract_one(data, "recommended"));
+    selected = extract_one(data, "selected");
+    recommended = extract_one(data, "recommended");
+
+    // Add the headings
+
+    nut_frame.append("text")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 20)
+        .attr("text-anchor", "middle")
+        .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
+        .attr("font-weight", "bold")
+        .attr("x", width * 0.25)
+        .attr("y", 70)
+        .text(selected.product_name);
+
+    nut_frame.append("text")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 20)
+        .attr("text-anchor", "middle")
+        .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
+        .attr("font-weight", "bold")
+        .attr("x", width * 0.75)
+        .attr("y", 70)
+        .text(recommended.product_name);
+
+    nut_frame.append("text")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 20)
+        .attr("text-anchor", "middle")
+        .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
+        .attr("font-weight", "bold")
+        .attr("x", width * 0.25)
+        .attr("y", 30)
+        .text("consider replacing...");
+
+    nut_frame.append("text")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 20)
+        .attr("text-anchor", "middle")
+        .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
+        .attr("font-weight", "bold")
+        .attr("x", width * 0.75)
+        .attr("y", 30)
+        .text("...with...");
+
+
+    // Draw the actual Nutrition Facts boxes
+
+    draw_nf(nut_frame, side_padding, top_row_height + vert_padding, selected);
+    draw_nf(nut_frame, width/2 + side_padding, top_row_height + vert_padding, recommended);
 
 
     function draw_nf(svg, x, y, data){
@@ -74,18 +116,9 @@ pic.update = function(data) {
 
         // get the serving size in g
         serving = parseFloat(data.serving_size.substring(0, data.serving_size.indexOf("g")));
-        console.log(serving);
-
         serv_factor = serving / 100
 
-
-        var wanted = ["energy","fat", "cholesterol",
-                      "carbohydrates", "sugars", "proteins", "sodium",
-                      "fiber"];
-
-        // Specify y position of the different fields
-
-
+        // Specify y position of the different fields and lines
         var text_specs = {"energy_100g": {y :110 , desc : "Calories", unit : "cal", main : 1, factor:1},
                           "fat_100g": {y :170, desc : "Total Fat", unit : "g", main : 1, factor:1},
                           "cholesterol_100g": {y :200, desc : "Cholesterol", unit : "mg", main : 1, factor:1000},
@@ -109,8 +142,18 @@ pic.update = function(data) {
                             11: {y :365 , main : 7},
                           };
 
+          // Highlight the criteria of main interest
+
+          svg.append("rect")
+              .attr("fill", "yellow")  // very dark gray, but not black) "#131516"
+              .attr("x", x + side_padding)
+              .attr("y", y + text_specs[criteria].y - 25)
+              .attr("width", box_width - 2* side_padding)
+              .attr("height", 40);
+
+
+        // Add the lines
           for (const key of Object.keys(line_specs)) {
-              console.log(key);
               svg.append("line")
                   .attr("stroke", "#131516")  // very dark gray, but not black) "#131516"
                   .attr("x1", x+side_padding)
@@ -120,9 +163,7 @@ pic.update = function(data) {
                   .attr("stroke-width", line_specs[key].main);
               };
 
-
-        console.log(text_specs["energy_100g"].desc);
-
+        // Add the static text
         svg.append("text")
             .attr("font-family", "sans-serif")
             .attr("font-size", 12)
@@ -152,6 +193,7 @@ pic.update = function(data) {
             .attr("font-weight", "bold")
             .text("% Daily Value*");
 
+        // Add the values for each attribute
         for (const key of Object.keys(text_specs)) {
 
             svg.append("text")
@@ -172,6 +214,7 @@ pic.update = function(data) {
                           "fiber_100g": {y :290, rda:25},
                       };
 
+        // Add RDA values for fields where those apply
         for (const key of Object.keys(rda_specs)) {
 
             svg.append("text")
@@ -186,75 +229,7 @@ pic.update = function(data) {
 
          };
 
-
-
-
-            //
-            // svg.append("text")
-            //     .attr("font-family", "sans-serif")
-            //     .attr("font-size", 16)
-            //     .attr("text-anchor", "end")
-            //     .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
-            //     .attr("font-weight", "bold")
-            //     .attr("x", x + box_width - side_padding)
-            //     .attr("y", y + text_specs[key].y)
-            //     .text((data[key]*serv_factor).toFixed(0) + "%");
-            // };
-
-
-    function extract_nf_fields(data){
-
-        var wanted = ["serving_size", "energy_100g","fat_100g", "cholesterol_100g",
-                      "carbohydrates_100g", "sugars_100g", "proteins_100g", "sodium_100g",
-                      "fiber_100g"]
-
-        serving = data.serving_size;
-        console.log(serving);
-
     };
-
-
-    };
-
-
-
-    // // Add a legend
-    // var legend = svg.append("g")
-    //     .attr("font-family", "sans-serif")
-    //     .attr("font-size", 12)
-    //     .attr("text-anchor", "start")
-    //     .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
-    //     .attr("font-weight", "bold")
-    //   .selectAll("g")
-    //   .data(data)
-    //   .enter().append("g")
-    //     .attr("transform", function(d) {
-    //          return "translate(" + para_width +"," + (margin.top + d.number * legend_step) + ")"; });
-    //
-    // // add text
-    // legend.append("text")
-    //     .attr("dx", legend_text.dx)
-    //     .attr("dy", legend_text.dy)
-    //     .text(function(d) { return d.product_name; })
-    //     .call(wrap_parallels, legend_text_width);
-    //
-    // // add colored squares
-    // legend.append("rect")
-    //     .attr("width", function(d) {
-    //         if (d.selected ===1 || d.recommended ===1){
-    //             return legend_rect.big;
-    //         } else {
-    //             return legend_rect.small;
-    //         };
-    //     })
-    //     .attr("height", function(d) {
-    //         if (d.selected ===1 || d.recommended ===1){
-    //             return legend_rect.big;
-    //         } else {
-    //             return legend_rect.small;
-    //         };
-    //     })
-    //     .attr("fill", function(d) {return get_parallel_color(d)});
 
 };
 

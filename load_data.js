@@ -25,7 +25,7 @@ function loadUSDAData(evt) {
             // initialize nutrition facts panel
             $("#nutfacts_panel").empty();
             var uc2=nutrition_facts("#nutfacts_panel");
-            uc2.update(filtered);
+            uc2.update(filtered, "fat_100g");
 
             // update search text with value
             document.getElementById('search-text').value = "Frosted Donuts";

@@ -41,13 +41,13 @@ function drawHOS(svg)
                                 $("#chart1").empty();
                                 var uc1=parallel_chart("#chart1");
                                 console.log("At button click, d.code is", d.code)
-                                filtered = find_and_rank_comparables(fullData, d.code, "sugars_100g");
+                                filtered = find_and_rank_comparables(fullData, d.code, "fat_100g");
                                 uc1.update(filtered);
 
                                 // update nutrition facts panel
                                 $("#nutfacts_panel").empty();
                                 var uc2=nutrition_facts("#nutfacts_panel");
-                                uc2.update(filtered);
+                                uc2.update(filtered, "fat_100g");
 
                                 // update search text with value
                                 document.getElementById('search-text').value = d.product_name;

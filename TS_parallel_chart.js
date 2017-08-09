@@ -276,15 +276,12 @@ function find_and_rank_comparables(data, productid, criteria) {
         else {
             filtered[i].recommended = 0;}
         };
-    console.log("after adding all tags")
-    console.log(filtered);
     return filtered;
 };
 
 
 //Label wrap function from "Wrapping Long Labels" - Mike Bostock
 function wrap_parallels(text, width) {
-console.log(text);
  text.each(function() {
    var text = d3.select(this),
      words = text.text().split(/\s+/).reverse(),
@@ -297,7 +294,6 @@ console.log(text);
      dx = parseFloat(text.attr("dx")),
      dy = parseFloat(text.attr("dy")),
      tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dx", dx).attr("dy", dy);
-     console.log(words);
    while (word = words.pop()) {
      line.push(word);
      tspan.text(line.join(" "));
