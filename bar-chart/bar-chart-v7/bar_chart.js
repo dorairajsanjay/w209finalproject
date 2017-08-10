@@ -65,7 +65,7 @@ pic.update = function(data, measure) {
       });
 	 
 	// Extract the measure and create a scale.
-    x.domain([0, d3.max(data, function(d) { return d[measure]; })]);
+    x.domain([-0.25, d3.max(data, function(d) { return d[measure]; })]);
 	
 	//Extract product names
 	y.domain(data.map(function(d) { return d.product_name; }))
