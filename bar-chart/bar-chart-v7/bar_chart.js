@@ -90,7 +90,15 @@ pic.update = function(data, measure) {
 			return "red";
 			} 
 			return "#29ABE2";
-			});
+			})
+	      .on("mouseover", function() {
+           		 d3.select(this)
+            		.attr("fill", "orange");
+      			  })
+          .on("mouseout", function(d, i) {
+          		  d3.select(this).attr("fill", function() {
+           	     return "" + color(this.id) + "";
+		  })});
 
 	//Append x axis
     svg.append("g")
