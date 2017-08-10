@@ -33,27 +33,33 @@ pic.update = function(data, criteria) {
 
     nut_frame.append("text")
         .attr("font-family", "sans-serif")
-        .attr("font-size", 20)
+        .attr("font-size", 18)
         .attr("text-anchor", "middle")
         .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
         .attr("font-weight", "bold")
         .attr("x", width * 0.25)
-        .attr("y", 70)
-        .text(selected.product_name);
+        .attr("y", 50)
+        .attr("dx", 0)
+        .attr("dy", 10)
+        .text(selected.product_name)
+        .call(wrap_nut_facts, 200);
 
     nut_frame.append("text")
         .attr("font-family", "sans-serif")
-        .attr("font-size", 20)
+        .attr("font-size", 18)
         .attr("text-anchor", "middle")
         .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
         .attr("font-weight", "bold")
         .attr("x", width * 0.75)
-        .attr("y", 70)
-        .text(recommended.product_name);
+        .attr("y", 50)
+        .attr("dx", 0)
+        .attr("dy", 10)
+        .text(recommended.product_name)
+        .call(wrap_nut_facts, 200);
 
     nut_frame.append("text")
         .attr("font-family", "sans-serif")
-        .attr("font-size", 20)
+        .attr("font-size", 18)
         .attr("text-anchor", "middle")
         .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
         .attr("font-weight", "bold")
@@ -63,7 +69,7 @@ pic.update = function(data, criteria) {
 
     nut_frame.append("text")
         .attr("font-family", "sans-serif")
-        .attr("font-size", 20)
+        .attr("font-size", 18)
         .attr("text-anchor", "middle")
         .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
         .attr("font-weight", "bold")
@@ -261,4 +267,31 @@ function extract_one(data, which){
         };
 
     return picked;
+};
+
+//Label wrap function from "Wrapping Long Labels" - Mike Bostock
+function wrap_nut_facts(text, width) {
+ text.each(function() {
+   var text = d3.select(this),
+     words = text.text().split(/\s+/).reverse(),
+     word,
+     line = [],
+     lineNumber = 0,
+     lineHeight = 17, //em
+     y = text.attr("y"),
+     x = text.attr("x"),
+     dx = parseFloat(text.attr("dx")),
+     dy = parseFloat(text.attr("dy")),
+     tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dx", dx).attr("dy", dy);
+   while (word = words.pop()) {
+     line.push(word);
+     tspan.text(line.join(" "));
+     if (tspan.node().getComputedTextLength() > width) {
+       line.pop();
+       tspan.text(line.join(" "));
+       line = [word];
+       tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dx", dx).attr("dy", ++lineNumber * lineHeight + dy).text(word);
+     }
+   }
+ })
 };
