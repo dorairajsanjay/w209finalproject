@@ -19,8 +19,9 @@ var frame = d3.select(eleID),
     width = 600 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom,
     maxBarWidth= height - margin.left,
-	maxChartHeight=height - (margin.top + margin.bottom)
-	maxBarWidth= width - margin.right;
+	maxChartHeight=height - (margin.top + margin.bottom),
+	maxBarWidth= width - margin.right,
+    label_offset = 10;
 
 var leftMargin = margin.left;
 
@@ -108,7 +109,7 @@ pic.update = function(data, measure) {
 			  .selectAll(".tick text")
 					.attr("stroke", "none")
 					.attr("fill", "black")
-					.call(wrap, leftMargin);
+					.call(wrap, leftMargin - label_offset);
 
         //Set attributes of SVG rects based
         var rectAttributes = rects
