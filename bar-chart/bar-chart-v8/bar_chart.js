@@ -15,9 +15,9 @@ var frame = d3.select(eleID),
         top: 20,
         right: 80,
         bottom: 30,
-        left: 150},	
-    width = 700 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom,
+        left: 150},
+    width = 600 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom,
     maxBarWidth= height - margin.left,
 	maxChartHeight=height - (margin.top + margin.bottom)
 	maxBarWidth= width - margin.right;
@@ -27,7 +27,7 @@ var leftMargin = margin.left;
 
 //Should change on button click
 var measure = measure;
-	
+
 //Creates rounding for tooltips
 var formatter = d3.format("d");
 
@@ -39,7 +39,7 @@ var xScale = d3.scaleLinear()
 //Create ordinal scale for x variables
 var yScale = d3.scaleBand()
 			.domain([0, maxChartHeight]);
-	  
+
 var x = d3.scaleLinear()
         .range([0, maxBarWidth]);
 
@@ -55,23 +55,23 @@ var svg = frame
 		.append("g")
 		  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-		  
+
 // Main method that can be called to draw the bar chart
 pic.update = function(data, measure) {
-	
+
 	//Sort the measure
     data.sort(function(a, b) {
         return a[measure] - b[measure];
       });
-	 
+
 	// Extract the measure and create a scale.
     x.domain([-0.25, d3.max(data, function(d) { return d[measure]; })]);
-	
+
 	//Extract product names
 	y.domain(data.map(function(d) { return d.product_name; }))
         .paddingInner(0.1);
-		
-		
+
+
 	//Create the rectangles
 	var rects = svg.selectAll(".bar")
 			.data(data)
@@ -85,10 +85,10 @@ pic.update = function(data, measure) {
 		  .attr("fill", function(d) {
 			if (d.recommended == 1) {
 			return "yellow";
-			} 
+			}
 			else if (d.selected == 1) {
 			return "red";
-			} 
+			}
 			return "#29ABE2";
 			});
 
@@ -98,7 +98,7 @@ pic.update = function(data, measure) {
           .attr("transform", "translate(0," + -2 + ")")
 		  .style("stroke-width", 0)
           .call(xAxis);
-	
+
 	//Append y axis
     svg.append("g")
           .attr("class", "y axis")
@@ -112,7 +112,7 @@ pic.update = function(data, measure) {
 
         //Set attributes of SVG rects based
         var rectAttributes = rects
-                              .on("mouseover", function(d, i) {		
+                              .on("mouseover", function(d, i) {
 								d3.select(this)
 									.attr("fill", "orange");
                                 //Show data value on mouse
@@ -129,23 +129,23 @@ pic.update = function(data, measure) {
                                       .attr("font-weight", "bold")
                                       .attr("fill", "black")
                                       .text(formatter(d[measure]));
-                              })                              
+                              })
                               //Transition on mouseout
                               .on("mouseout", function(d, i) {
                                 d3.select(this)
-									d3.select("#tooltip").remove();	
+									d3.select("#tooltip").remove();
 								d3.select(this)
 									.attr("fill", function(d) {
 										if (d.recommended == 1) {
 											return "yellow";
-										} 
+										}
 										else if (d.selected == 1) {
 											return "red";
-										} 
+										}
 										return "#29ABE2";
 									});
 							  });
-							  						  
+
 };
 
 // Return the created object, ready to be called with the update method
@@ -165,7 +165,7 @@ return pic;
 function type(d) {
      d.measure = +d.measure;
      return d;
-    }	
+    }
 
 //Label wrap function from "Wrapping Long Labels" - Mike Bostock
  function wrap(text, width) {
@@ -188,7 +188,7 @@ function type(d) {
               tspan.text(line.join(" "));
               line = [word];
               tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-            } 
+            }
           }
         })
       }
@@ -219,7 +219,7 @@ function find_and_rank_comparables(data, productid, criteria) {
         };
 
     // now go through and select all the objects that match the category \
-	//and have a value greater than zero 
+	//and have a value greater than zero
     // also adding an attribute to mark which is the selected one
     var filtered = [];
     var comp_count = 0;
@@ -234,7 +234,7 @@ function find_and_rank_comparables(data, productid, criteria) {
             filtered.push(data[i]);
         };
     };
-	
+
 
     // Now sort the objects based on the specified criteria
     filtered.sort(function(a, b) { return parseFloat(a[criteria]) -
