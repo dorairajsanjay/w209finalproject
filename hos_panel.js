@@ -39,7 +39,7 @@ function drawHOS(svg)
 
                             // initialize left charts panel
                             filtered = find_and_rank_comparables(fullData, d.code, getMeasure(bfc_context.selected_submenu_button.id));
-                            
+
                             // update search text with value
                             document.getElementById('search-text').value = d.product_name;
 
@@ -59,9 +59,12 @@ function drawHOS(svg)
                             {
                                 $("#chart1").empty();
                                 $("#nutfacts_panel").empty();
-                                
+
                                 var uc2=nutrition_facts("#nutfacts_panel")
-                                var uc1=bar_chart("#chart1", getMeasure(bfc_context.selected_submenu_button.id));
+                                var uc1=bar_chart("#chart1");
+                                // var uc1=bar_chart("#chart1", getMeasure(bfc_context.selected_submenu_button.id));
+                                console.log(filtered);
+                                console.log(getMeasure(bfc_context.selected_submenu_button.id));
 
                                 uc1.update(filtered, getMeasure(bfc_context.selected_submenu_button.id));
                                 uc2.update(filtered, getMeasure(bfc_context.selected_submenu_button.id));

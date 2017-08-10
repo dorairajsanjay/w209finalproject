@@ -176,7 +176,7 @@ function type(d) {
             word,
             line = [],
             lineNumber = 0,
-            lineHeight = 1.1, //em
+            lineHeight = 1, //em
             y = text.attr("y"),
 			x = text.attr("x"),
             dy = parseFloat(text.attr("dy")),
