@@ -8,22 +8,22 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
-    <script src="http://localhost:8080/hos_panel.js"></script>
-    <script src="http://localhost:8080/search_panel.js"></script>
-    <script src="http://localhost:8080/libs/papaparse.min.js"></script>
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="http://localhost:8080/TS_parallel_chart.js"></script>
-    <script src="http://localhost:8080/TS_nutrition_facts.js"></script>
-    <script src="http://localhost:8080/load_data.js"></script>
-    <script src="http://localhost:8080/option_buttons.js"></script>
+    <script src="http://localhost:8000/hos_panel.js"></script>
+    <script src="http://localhost:8000/search_panel.js"></script>
+    <script src="http://localhost:8000/libs/papaparse.min.js"></script>
+    <script src="http://localhost:8000/TS_parallel_chart.js"></script>
+    <script src="http://localhost:8000/TS_nutrition_facts.js"></script>
+    <script src="http://localhost:8000/load_data.js"></script>
+    <script src="http://localhost:8000/option_buttons.js"></script>
+     <script src="http://localhost:8000/bar-chart/bar-chart-v7/bar_chart.js"></script>
     <script>
-        var url = "http://localhost:8080/demo_food_data_sd.csv";
+        var url = "http://localhost:8000/demo_food_data_sd.csv";
 
         // bfc stands for better food choices
         var bfc_context = {
-            selected_main_button :null,
-            selected_sv_button :null,
-            selected_av_button :null
+            selected_topmenu_button :null,
+            selected_submenu_button :null,
     };
     </script>
 </head>
@@ -42,7 +42,7 @@
             cursor: pointer;
             border: 2px solid;
             border-radius: 25px;
-            width: 275px;
+            width: 150px;
         }
         .sv_button {
             background-color: #29ABE2;
@@ -109,17 +109,18 @@
                 <table width = "600">
                     <tr>
                         <td>
-                            <button type="button" id="sv-main" class="main_button inactive" onclick="optionButtonSelected(this.id)" >Simple View</button>
-                            <button type="button"  id="av-main" class="main_button inactive" onclick="optionButtonSelected(this.id)">Advanced View - multiple measures</button>
+                            <button type="button" id="sv" class="main_button inactive" onclick="optionButtonSelected(this.id)" >Simple View</button>
+                            <button type="button"  id="av-parallel" class="main_button inactive" onclick="optionButtonSelected(this.id)">Advanced - Parallel Charts</button>
+                            <button type="button"  id="av-polygon" class="main_button inactive" onclick="optionButtonSelected(this.id)">Advanced - Polygon Charts</button>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                                <button type="button"  id="sv-fat" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Fat</button>
-                                <button type="button"  id="sv-sugars" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Sugars</button>
-                                <button type="button"  id="sv-proteins" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Proteins</button>
-                                <button type="button"  id="sv-sodium" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Sodium</button>
-                                <button type="button"  id="sv-fiber" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Fiber</button>
+                                <button type="button"  id="fat" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Fat</button>
+                                <button type="button"  id="sugars" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Sugars</button>
+                                <button type="button"  id="proteins" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Proteins</button>
+                                <button type="button"  id="sodium" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Sodium</button>
+                                <button type="button"  id="fiber" class="sv_button inactive" onclick="optionButtonSelected(this.id)">Fiber</button>
                         </td>
 
                         <script>

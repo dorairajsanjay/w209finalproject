@@ -37,22 +37,41 @@ function drawHOS(svg)
                             .on("click",function(d,i) {
                                 updateButtonColors(d3.select(this), d3.select(this.parentNode));
 
-                                // update left charts panel
+                            // initialize left charts panel
+                            filtered = find_and_rank_comparables(fullData, d.code, getMeasure(bfc_context.selected_submenu_button.id));
+                            
+                            // update search text with value
+                            document.getElementById('search-text').value = d.product_name;
+
+                            // invoke the corresponding chart
+                            if (bfc_context.selected_topmenu_button.id == "av-parallel")
+                            {
                                 $("#chart1").empty();
-                                var uc1=parallel_chart("#chart1");
-                                console.log("At button click, d.code is", d.code)
-                                filtered = find_and_rank_comparables(fullData, d.code, "fat_100g");
-                                uc1.update(filtered);
-
-                                // update nutrition facts panel
                                 $("#nutfacts_panel").empty();
-                                var uc2=nutrition_facts("#nutfacts_panel");
-                                uc2.update(filtered, "fat_100g");
 
-                                // update search text with value
-                                document.getElementById('search-text').value = d.product_name;
+                                var uc1=parallel_chart("#chart1");
+                                var uc2=nutrition_facts("#nutfacts_panel")
 
-                            });
+                                uc1.update(filtered);
+                                uc2.update(filtered, getMeasure(bfc_context.selected_submenu_button.id));
+                            }
+                            else if (bfc_context.selected_topmenu_button.id == "sv")
+                            {
+                                $("#chart1").empty();
+                                $("#nutfacts_panel").empty();
+                                
+                                var uc2=nutrition_facts("#nutfacts_panel")
+                                var uc1=bar_chart("#chart1", getMeasure(bfc_context.selected_submenu_button.id));
+
+                                uc1.update(filtered, getMeasure(bfc_context.selected_submenu_button.id));
+                                uc2.update(filtered, getMeasure(bfc_context.selected_submenu_button.id));
+
+                            }
+                            else{
+                                alert("In advanced polygon chart - sorry, this is not yet implemented.");
+                            }
+
+                        });
 
     //adding a rect to each button group
     //rx and ry give the rect rounded corner

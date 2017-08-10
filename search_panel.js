@@ -9,11 +9,35 @@ function processSearchKey(){
     filterText = d3.select('#search-text').property('value');
     if (keyCode == 13) {
             // initialize left charts panel
-            var productCode = onFilter(filterText);
-            $("#chart1").empty();
-            var uc1=parallel_chart("#chart1");
-            filtered = find_and_rank_comparables(data.data, productCode, "sugars_100g");
-            uc1.update(filtered);       
+            filtered = find_and_rank_comparables(data.data, onFilter(filterText), getMeasure(bfc_context.selected_submenu_button.id));
+
+            // invoke the corresponding chart
+            if (bfc_context.selected_topmenu_button.id == "av-parallel")
+            {
+                $("#chart1").empty();
+                $("#nutfacts_panel").empty();
+
+                var uc1=parallel_chart("#chart1");
+                var uc2=nutrition_facts("#nutfacts_panel")
+
+                uc1.update(filtered);
+                uc2.update(filtered, getMeasure(bfc_context.selected_submenu_button.id));
+            }
+            else if (bfc_context.selected_topmenu_button.id == "sv")
+            {
+                $("#chart1").empty();
+                $("#nutfacts_panel").empty();
+                
+                var uc2=nutrition_facts("#nutfacts_panel")
+                var uc1=bar_chart("#chart1", getMeasure(bfc_context.selected_submenu_button.id));
+
+                uc1.update(filtered, getMeasure(bfc_context.selected_submenu_button.id));
+                uc2.update(filtered, getMeasure(bfc_context.selected_submenu_button.id));
+
+            }
+            else{
+                alert("In advanced polygon chart - sorry, this is not yet implemented.");
+            } 
     }
     else{
         onFilter(filterText);

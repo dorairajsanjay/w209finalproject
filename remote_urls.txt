@@ -8,6 +8,7 @@
     <script src="http://54.165.168.158/w209finalproject/TS_parallel_chart.js"></script>
     <script src="http://54.165.168.158/w209finalproject/load_data.js"></script>
     <script src="http://54.165.168.158/w209finalproject/option_buttons.js"></script>
+    <script src="http://54.165.168.158/bar-chart/bar-chart-v7/bar_chart.js"></script>
     <script>
         var url = "http://54.165.168.158//w209finalproject/demo_food_data_sd.csv";
         
