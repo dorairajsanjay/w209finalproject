@@ -9,16 +9,16 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="http://localhost:8000/hos_panel.js"></script>
-    <script src="http://localhost:8000/search_panel.js"></script>
-    <script src="http://localhost:8000/libs/papaparse.min.js"></script>
-    <script src="http://localhost:8000/TS_parallel_chart.js"></script>
-    <script src="http://localhost:8000/TS_nutrition_facts.js"></script>
-    <script src="http://localhost:8000/load_data.js"></script>
-    <script src="http://localhost:8000/option_buttons.js"></script>
-     <script src="http://localhost:8000/bar-chart/bar-chart-v7/bar_chart.js"></script>
+    <script src="http://localhost:8080/hos_panel.js"></script>
+    <script src="http://localhost:8080/search_panel.js"></script>
+    <script src="http://localhost:8080/libs/papaparse.min.js"></script>
+    <script src="http://localhost:8080/TS_parallel_chart.js"></script>
+    <script src="http://localhost:8080/TS_nutrition_facts.js"></script>
+    <script src="http://localhost:8080/load_data.js"></script>
+    <script src="http://localhost:8080/option_buttons.js"></script>
+     <script src="http://localhost:8080/bar-chart/bar-chart-v7/bar_chart.js"></script>
     <script>
-        var url = "http://localhost:8000/demo_food_data_sd.csv";
+        var url = "http://localhost:8080/demo_food_data_sd.csv";
 
         // bfc stands for better food choices
         var bfc_context = {
@@ -70,6 +70,31 @@
         .active {
             background-color: #29ABE2;
             color: white;
+            }
+        h1 {
+            margin: 0px 0px 15px 20px;
+            font-family: sans-serif;
+            }
+
+        .bar:hover {
+            fill: orange;
+            }
+
+        .label {
+            fill: black;
+            font: 12px sans-serif;
+            }
+
+        .y path, .y stroke, .y line {
+            display: none;
+            }
+
+        .x path, .x stroke {
+            display: none;
+            }	
+            
+        #measureOptions {
+                font: 14px sans-serif;
             }
 
     </style>
