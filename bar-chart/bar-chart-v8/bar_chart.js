@@ -62,7 +62,9 @@ pic.update = function(data, measure) {
 
 	//Sort the measure
     data.sort(function(a, b) {
-        return b[measure] - a[measure];
+		if (measure=="proteins_100g" || measure=="fiber_100g") {
+        return a[measure] - b[measure]}
+		return b[measure] - a[measure];
       });
 
 	// Extract the measure and create a scale.
@@ -238,8 +240,19 @@ function find_and_rank_comparables(data, productid, criteria) {
 
 
     // Now sort the objects based on the specified criteria
-    filtered.sort(function(a, b) { return parseFloat(a[criteria]) -
-                                          parseFloat(b[criteria])} );
+    filtered.sort(function(a, b) {
+		console.log(criteria)
+		if (criteria=="proteins_100g" || criteria=="fiber_100g") {
+        return parseFloat(b[criteria]) - parseFloat(a[criteria])}
+		return parseFloat(a[criteria]) - parseFloat(b[criteria]);
+      });
+										  
+	//Sort the measure
+    data.sort(function(a, b) {
+		if (measure=="proteins_100g" || measure=="fiber_100g") {
+        return a[measure] - b[measure]}
+		return b[measure] - a[measure];
+      });
 
     // Now flag which one is the recommended, based on the sort
 
