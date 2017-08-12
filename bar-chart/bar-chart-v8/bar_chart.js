@@ -87,12 +87,12 @@ pic.update = function(data, measure) {
 		   // add this attribute to change the color of the rect
 		  .attr("fill", function(d) {
 			if (d.recommended == 1) {
-			return "yellow";
+			return "#33cc33";
 			}
 			else if (d.selected == 1) {
-			return "red";
+			return "#3399ff";
 			}
-			return "#29ABE2";
+			return "#bdbdbd";
 			});
 
 	//Append x axis
@@ -140,12 +140,12 @@ pic.update = function(data, measure) {
 								d3.select(this)
 									.attr("fill", function(d) {
 										if (d.recommended == 1) {
-											return "yellow";
+											return "#33cc33";
 										}
 										else if (d.selected == 1) {
-											return "red";
+											return "#3399ff";
 										}
-										return "#29ABE2";
+										return "#bdbdbd";
 									});
 							  });
 

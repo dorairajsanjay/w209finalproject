@@ -233,9 +233,9 @@ return pic;
 
 function get_parallel_color(d) {
     if (d.selected === 1) {
-        return "#3399ff"; // ruby red
+        return "#3399ff"; // blue
     } else if (d.recommended === 1) {
-        return "#33cc33";
+        return "#33cc33"; // green
     } else {
         muteds = ["#9c9ede","#cedb9c","#e7cb94","#e7969c","#de9ed6",
                   "#c6dbef","#fdd0a2","#c7e9c0","#dadaeb","#d9d9d9",
