@@ -246,13 +246,7 @@ function find_and_rank_comparables(data, productid, criteria) {
         return parseFloat(b[criteria]) - parseFloat(a[criteria])}
 		return parseFloat(a[criteria]) - parseFloat(b[criteria]);
       });
-										  
-	//Sort the measure
-    data.sort(function(a, b) {
-		if (measure=="proteins_100g" || measure=="fiber_100g") {
-        return a[measure] - b[measure]}
-		return b[measure] - a[measure];
-      });
+
 
     // Now flag which one is the recommended, based on the sort
 
