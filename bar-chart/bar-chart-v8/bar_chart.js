@@ -92,7 +92,7 @@ pic.update = function(data, measure) {
 			else if (d.selected == 1) {
 			return "#3399ff";
 			}
-			return "#bdbdbd";
+			return "#999999";
 			});
 
 	//Append x axis
@@ -145,7 +145,7 @@ pic.update = function(data, measure) {
 										else if (d.selected == 1) {
 											return "#3399ff";
 										}
-										return "#bdbdbd";
+										return "#999999";
 									});
 							  });
 

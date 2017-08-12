@@ -14,10 +14,10 @@ function drawHOS(svg)
     var hos_bSpace= 3; //space between buttons
     var hos_x0= 20; //x offset
     var hos_y0= 20; //y offset
-    var hos_borderWidth= 1; // border thickness
-    var hos_borderColor = "#29ABE2";
-    var hos_focusBorderColor = "#29ABE2";
-    var hos_focusBorderWidth = 4;
+    var hos_borderWidth= 4; // border thickness
+    var hos_borderColor = "#999999";
+    var hos_focusBorderColor = "#3399ff";
+    var hos_focusBorderWidth = 10;
 
     // filter elements from product set for HOS panel
     var hosData = data.data.filter(function(d) {
