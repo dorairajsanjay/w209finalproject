@@ -62,7 +62,7 @@ pic.update = function(data, measure) {
 
 	//Sort the measure
     data.sort(function(a, b) {
-        return a[measure] - b[measure];
+        return b[measure] - a[measure];
       });
 
 	// Extract the measure and create a scale.
@@ -115,7 +115,7 @@ pic.update = function(data, measure) {
         var rectAttributes = rects
                               .on("mouseover", function(d, i) {
 								d3.select(this)
-									.attr("fill", "orange");
+									.attr("fill", "#0071BC");
                                 //Show data value on mouse
                                 var xPosition = (parseFloat(d3.select(this).attr("width"))+6);
                                 var yPosition = parseFloat(d3.select(this).attr("y")) + (parseFloat(d3.select(this).attr("height")) / 2);
