@@ -13,7 +13,7 @@ pic = {}; // create object for function to return
 // para is for the part of the chart with the parallel chart
 
 var frame = d3.select(eleID),
-    margin = {top: 75, right: 10, bottom: 10, left: 10},
+    margin = {top: 70, right: 10, bottom: 30, left: 10},
     width = +frame.attr("width"),
     height = +frame.attr("height"),
     para_w_proportion = .6, // proportion of frame for parallels
@@ -22,7 +22,11 @@ var frame = d3.select(eleID),
     legend_rect = {big: 18, small:12},
     legend_text = {dx:25, dy:10},
     legend_text_width = width - para_width - legend_rect.big - legend_text.dx,
-    line_width = {highlight: 5, regular:2}
+    line_width = {highlight: 5, regular:2},
+    axis_label_offset = -30,
+    better_offset = 10,
+    worse_offset = 20,
+    tick_count = 2; // controls suggested number of ticks.  Set to 0 gives none
 
 var x = d3.scalePoint().range([margin.left, para_width]).padding(0.25),
     y = {}
@@ -30,28 +34,43 @@ var x = d3.scalePoint().range([margin.left, para_width]).padding(0.25),
 
 var line = d3.line(),
     axis = d3.axisLeft()
-        .ticks(5),  // don't need a very precisely marked scale
+        .ticks(tick_count),  // don't need a very precisely marked scale
     background,
     foreground;
 
 var svg = frame;
-  //   .attr("width", width + margin.left + margin.right)
-  //   .attr("height", height + margin.top + margin.bottom)
-  // .append("g")
-  //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
 
 // Main method that can be called to draw the chart given some data
 pic.update = function(data) {
 
-    var wanted = ["fat_100g", "sugars_100g", "proteins_100g", "sodium_100g",
-                  "fiber_100g"]
+    // specify which fields we want to draw, and what direction is good
+    // -1 means lower is better, +1 means higher is better
+
+    var wanted = {"fat_100g": -1,
+                  "sugars_100g": -1,
+                  "proteins_100g": +1,
+                  "sodium_100g": -1,
+                  "fiber_100g": +1,
+                  };
+
+    var bad = {};
+    var good = {};
+
+    for (const key of Object.keys(wanted)) {
+        if (wanted[key] === -1) {
+            good[key] = para_height;
+            bad[key] = margin.top;
+        } else {
+            good[key] = margin.top;
+            bad[key] = para_height;
+        };
+        };
 
     // Extract the list of dimensions and create a scale for each.
     x.domain(dimensions = d3.keys(data[0]).filter(function(d) {
-      return wanted.includes(d) && (y[d] = d3.scaleLinear()
+      return Object.keys(wanted).includes(d) && (y[d] = d3.scaleLinear()
           .domain(d3.extent(data, function(p) { return +p[d]; }))
-          .range([para_height, margin.top]));
+          .range([bad[d], good[d]]));
     }));
 
     // Add a group element for each dimension.
@@ -66,25 +85,57 @@ pic.update = function(data) {
         .attr("class", "axis")
         .each(function(d) { d3.select(this).call(axis.scale(y[d])); })
       .append("text") // add the text labels at the top
-        .style("text-anchor", "start")  //
+        .style("text-anchor", "middle")  //
         .text(function(d) { return d.substring(0, d.indexOf("_"));})
-        .attr("dy", -15)
+        .attr("class", "axis_heading")
+        .attr("dy", axis_label_offset)
         .attr("stroke", "none")
-        .attr("font-size", "16px")
+        .attr("font-size", "14px")
         .attr("font-weight", "bold")
-        .attr("transform", "translate(0,"+margin.top+") rotate(-45)");
+        .attr("transform", "translate(0,"+margin.top+") rotate(0)");
 
     // Style the main axis lines
     g.selectAll("path")
         .style("stroke", "#bdbdbd")  // mid gray
+        .style("stroke-width", 5)
 
     // Style the axis tick mark lines
     g.selectAll("line")
-        .style("stroke", "#bdbdbd")
+        .style("stroke", "#ffffff")
+        .style("stroke-width", 3)
+        .attr("transform", "translate(4,0)")
 
     // Style the axis tick labels and heading
     g.selectAll("text")
+        .style("fill", "#bdbdbd") // mid gray
+
+    // Style the axis heading
+    g.selectAll(".axis_heading")
         .style("fill", "#131516") // very dark gray, but not black
+
+    // Add text explanation of better and worse directions
+
+    svg.append("text")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 12)
+        .attr("text-anchor", "middle")
+        .attr("fill", "#bdbdbd")  // mid gray
+        .attr("x", margin.left + para_width / 2)
+        .attr("y", margin.top - better_offset)
+        .attr("font-weight", "bold")
+
+        .text("Better");
+
+    svg.append("text")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 12)
+        .attr("text-anchor", "middle")
+        .attr("fill", "#bdbdbd")  // mid gray
+        .attr("x", margin.left + para_width / 2)
+        .attr("y", para_height + worse_offset)
+        .attr("font-weight", "bold")
+        .text("Worse");
+
 
     // Draw the colored lines for each product
     foreground = svg.append("g")
@@ -182,9 +233,9 @@ return pic;
 
 function get_parallel_color(d) {
     if (d.selected === 1) {
-        return "#d62728";
+        return "#3399ff"; // ruby red
     } else if (d.recommended === 1) {
-        return "#1f77b4";
+        return "#33cc33";
     } else {
         muteds = ["#9c9ede","#cedb9c","#e7cb94","#e7969c","#de9ed6",
                   "#c6dbef","#fdd0a2","#c7e9c0","#dadaeb","#d9d9d9",

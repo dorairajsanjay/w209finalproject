@@ -150,8 +150,14 @@ pic.update = function(data, criteria) {
 
           // Highlight the criteria of main interest
 
+          if (data["selected"] === 1) {
+              highlight_color = "#3399ff"; // blue for selected
+          } else {
+              highlight_color = "#33cc33"; // green for recommended
+          };
+
           svg.append("rect")
-              .attr("fill", "yellow")  // very dark gray, but not black) "#131516"
+              .attr("fill", highlight_color)  // very dark gray, but not black) "#131516"
               .attr("x", x + side_padding)
               .attr("y", y + text_specs[criteria].y - 25)
               .attr("width", box_width - 2* side_padding)
