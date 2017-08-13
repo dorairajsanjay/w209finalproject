@@ -30,8 +30,11 @@
 
 <body>
     <style>
+    h1.hidden {
+        visibility: hidden;
+    }
 	body {
-        background-image: url("https://s-media-cache-ak0.pinimg.com/originals/72/48/bf/7248bff05a976791c222e3d5e8a02a44.jpg"); 
+        background-image: url("http://localhost:8000/1920x1200-mint-cream-solid-color-background.png"); 
         height:50%;
         width:80%;
         position:absolute;
@@ -50,11 +53,12 @@
             border: 2px solid;
             border-radius: 25px;
             width: 188px;
+            outline: none;
         }
         .sv_button {
             background-color: #999999;
             color: white;
-            padding: 8px 24px;
+            padding: 8px 32px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
@@ -64,6 +68,7 @@
             border: 2px solid;
             border-radius: 25px;
             width: 110px;
+            outline: none;
         }
 
         .table td, .table th {
@@ -107,20 +112,20 @@
 
     </style>
 
-    <h1 align="center"> Better Food Choices</h1>
+ <h1 class="hidden" align="center">Better Food Choices</h1>
 
        <body>
       <table  width= "1200" border = "0">
 
          <tr valign = "top" >
-            <td id="hos-panel"  width = "760">
+            <td id="hos-panel"  width = "760" height = "140">
             </td>
 
             <td id="search-panel" width = "440">
                 <table>
                     <tr>
                     <td>
-                        <label  style="font-size:16px;font-weight: bold;"><br><br>Or search for a product name:</label>
+                        <label  style="font-size:24px;font-weight: bold;"><br><br>Or search for a product name:</label>
                     </td>
                     </tr>
                     <tr>
@@ -189,7 +194,7 @@
     // other variables
     var hos_data;
     var hos_width = 760;
-    var hos_height = 100;
+    var hos_height = 140;
 
     // create SVG element
     var svg = d3.select("#hos-panel")

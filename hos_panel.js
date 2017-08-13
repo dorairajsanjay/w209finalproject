@@ -9,14 +9,15 @@ function drawHOS(svg)
 
     // hall of shame panel config
     var hos_lastButton = null;
-    var hos_bWidth= 80; //button width
-    var hos_bHeight=80; //button height
-    var hos_bSpace= 3; //space between buttons
+    var hos_bWidth= 140; //button width
+    var hos_bHeight=118; //button height
+    var hos_bSpace= 10; //space between buttons
     var hos_x0= 20; //x offset
     var hos_y0= 20; //y offset
-    var hos_borderWidth= 4; // border thickness
+    var hos_borderWidth= 0; // border thickness
     var hos_borderColor = "#999999";
-    var hos_focusBorderColor = "#3399ff";
+    //var hos_focusBorderColor = "#3399ff";
+    var hos_focusBorderColor = "gray";
     var hos_focusBorderWidth = 10;
 
     // filter elements from product set for HOS panel
@@ -85,20 +86,34 @@ function drawHOS(svg)
                 .attr("x",function(d,i) {return hos_x0+(hos_bWidth+hos_bSpace)*i;})
                 .attr("y",hos_y0)
                 .attr("border",hos_borderWidth)
-                .style("stroke", hos_borderColor)
+                .style("stroke", function(d,i) { 
+                                                if(i==0) 
+                                                    return hos_focusBorderColor;
+                                                 else 
+                                                    return hos_borderColor;
+                                                })
                 .style("fill", "none")
-                .style("stroke-width", hos_borderWidth);
+                .style("stroke-width", function(d,i) { 
+                                        if(i==0) 
+                                        {
+                                             hos_lastButton = d3.select(this.parentNode);
+                                             return hos_focusBorderWidth;
+                                        }
+                                        else 
+                                            return hos_borderWidth;
+                                    })
+                .style("background-color","red");
 
     //adding image to each toggle button group
     buttonGroups.append("svg:image")
         .attr("class","buttonImage")
         .attr("x",function(d,i) {return hos_x0+(hos_bWidth+hos_bSpace)*i;})
-        .attr("y",hos_y0)
+        .attr("y",hos_y0+5)
         .attr("xlink:href", function(d) {return d.image_url;})
         .attr("dominant-baseline","central")
         .attr("fill","white")
-        .attr("width", hos_bWidth)
-        .attr("height", hos_bHeight);
+        .attr("width", hos_bWidth-10)
+        .attr("height", hos_bHeight-10);
 
     function updateButtonColors(button, parent) {
         if  (hos_lastButton == null){

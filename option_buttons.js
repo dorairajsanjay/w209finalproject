@@ -92,7 +92,7 @@ function optionButtonSelected(id){
         var uc2=nutrition_facts("#nutfacts_panel")
 
         filterText = d3.select('#search-text').property('value');
-        productCode = onFilter(filterText);
+        productCode = onFilter(filterText,false);
         filtered = find_and_rank_comparables(data.data, productCode,measure);
 
         uc1.update(filtered);
@@ -107,7 +107,7 @@ function optionButtonSelected(id){
         var uc1=bar_chart("#chart1", measure);
 
         filterText = d3.select('#search-text').property('value');
-        productCode = onFilter(filterText);
+        productCode = onFilter(filterText,false);
         filtered = find_and_rank_comparables(data.data, productCode,measure);
 
         uc1.update(filtered, measure);

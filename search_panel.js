@@ -8,8 +8,11 @@ function processSearchKey(){
 
     filterText = d3.select('#search-text').property('value');
     if (keyCode == 13) {
+            // clear the list of items
+            d3.select('#filteredList').html("");
+
             // initialize left charts panel
-            filtered = find_and_rank_comparables(data.data, onFilter(filterText), getMeasure(bfc_context.selected_submenu_button.id));
+            filtered = find_and_rank_comparables(data.data, onFilter(filterText,false), getMeasure(bfc_context.selected_submenu_button.id));
 
             // invoke the corresponding chart
             if (bfc_context.selected_topmenu_button.id == "av-parallel")
@@ -49,7 +52,7 @@ function processSearchKey(){
 *    search for matching data
 ***********************************/
 
-function onFilter(filterText){
+function onFilter(filterText,showRelated=true){
 
     var filteredData;  
 
@@ -61,12 +64,15 @@ function onFilter(filterText){
         });
     }
 
-    filteredData = filteredData.slice(0,4)
-    d3.select('#filteredList').html(
-        filteredData.map(function(d){
-        return d.product_name;
-        }).join(".<br/>")
-    );
+    if (showRelated == true)
+    {
+        filteredData = filteredData.slice(0,4);
+        d3.select('#filteredList').html(
+            filteredData.map(function(d){
+            return d.product_name;
+            }).join(".<br/>")
+        );
+    }
 
     return filteredData[0].code;
 }
