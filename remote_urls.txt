@@ -1,22 +1,4 @@
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
-    <script src="http://54.165.168.158/w209finalproject/hos_panel.js"></script>
-    <script src="http://54.165.168.158/w209finalproject/search_panel.js"></script>
-    <script src="http://54.165.168.158/w209finalproject/libs/papaparse.min.js"></script>
-    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="http://54.165.168.158/w209finalproject/TS_parallel_chart.js"></script>
-    <script src="http://54.165.168.158/w209finalproject/load_data.js"></script>
-    <script src="http://54.165.168.158/w209finalproject/option_buttons.js"></script>
-    <script src="http://54.165.168.158/bar-chart/bar-chart-v7/bar_chart.js"></script>
-    <script>
-        var url = "http://54.165.168.158//w209finalproject/demo_food_data_sd.csv";
-        
-        // bfc stands for better food choices
-        var bfc_context = {  
-            selected_main_button :null,
-            selected_sv_button :null,
-            selected_av_button :null
-        };
-    </script>
+VI change code
+
+%s/localhost\:8000/54\.165\.168\.158\/w209finalproject/g
 
