@@ -35,6 +35,12 @@ function drawHOS(svg)
                             .append("g")
                             .attr("class","button")
                             .style("cursor","pointer")
+                            .on("mouseover", function() {
+                                d3.select(this).classed("hover", true);
+                            })
+                            .on("mouseout", function() {
+                                d3.select(this).classed("hover", false);
+                            })
                             .on("click",function(d,i) {
                                 updateButtonColors(d3.select(this), d3.select(this.parentNode));
 
