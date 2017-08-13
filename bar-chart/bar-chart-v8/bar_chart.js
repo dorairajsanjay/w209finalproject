@@ -87,10 +87,10 @@ pic.update = function(data, measure) {
 		   // add this attribute to change the color of the rect
 		  .attr("fill", function(d) {
 			if (d.recommended == 1) {
-			return "#33cc33";
+			return "#3399ff";
 			}
 			else if (d.selected == 1) {
-			return "#3399ff";
+			return "#e0b211";
 			}
 			return "#999999";
 			});
@@ -140,10 +140,10 @@ pic.update = function(data, measure) {
 								d3.select(this)
 									.attr("fill", function(d) {
 										if (d.recommended == 1) {
-											return "#33cc33";
+											return "#3399ff";
 										}
 										else if (d.selected == 1) {
-											return "#3399ff";
+											return "#e0b211";
 										}
 										return "#999999";
 									});
