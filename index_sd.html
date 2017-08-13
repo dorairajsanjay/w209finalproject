@@ -30,17 +30,7 @@
 
 <body>
     <style>
-    h1.hidden {
-        visibility: hidden;
-    }
-    body {
-        height: 100%;
-        }
-	body {
-        background-image: url("http://localhost:8000/betterfood-background.png"); 
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-	}
+
         .main_button {
             background-color: #999999;
             color: white;
@@ -114,6 +104,10 @@
             display: none;
             }
 
+        .hover {
+            background-color:#0071BC;
+}
+
         #measureOptions {
                 font: 14px sans-serif;
             }
@@ -123,7 +117,11 @@
        <body>
       <table  width= "1200" border = "0">
         <tr>
-            <td colspan = 4><img src="http://localhost:8000/betterfood_toppanel.png" alt="" border=0 height=100 width=1220></img></td>
+            <td colspan = 4><img src="http://localhost:8000/betterfood_toppanel.png" alt="" border=0 height=75 width=1220></img></td>
+        </tr>
+
+        <tr>
+    	    <th colspan = 4 width="1220" align="right"><font size="4" color="black"><a href="http://localhost:8000/about.html">About this website</a></th>
         </tr>
 
          <tr valign = "top" >
@@ -134,12 +132,12 @@
                 <table>
                     <tr>
                     <td>
-                        <label  style="font-size:24px;font-weight: bold;"><br><br>Or search for a product name:</label>
+                        <label  style="font-family:sans-serif;font-size:20px;"><br><br>Start typing below to search for a product:</label>
                     </td>
                     </tr>
                     <tr>
                     <td>
-                        <input style="font-size:20px;border-width:5px;border-style:solid;border-color:gray;width:440px;height:30px" type="text" id="search-text" placeholder="...">
+                        <input style="font-weight:bold;font-size:20px;font-family:sans-serif;border-width:5px;border-style:solid;border-color:gray;width:440px;height:30px" type="text" id="search-text" placeholder="...">
                         <div id="filteredList"></div>
                         <script src="search_panel.js"></script>
                         <script>

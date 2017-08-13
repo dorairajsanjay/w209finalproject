@@ -19,6 +19,7 @@ function drawHOS(svg)
     //var hos_focusBorderColor = "#3399ff";
     var hos_focusBorderColor = "gray";
     var hos_focusBorderWidth = 10;
+    var hos_hoverBorderColor = "#0071BC";
 
     // filter elements from product set for HOS panel
     var hosData = data.data.filter(function(d) {
@@ -35,6 +36,12 @@ function drawHOS(svg)
                             .append("g")
                             .attr("class","button")
                             .style("cursor","pointer")
+                            .on("mouseover", function(d){
+                                updateButtonColors(d3.select(this), d3.select(this.parentNode),true);
+                            })
+                            .on("mouseout", function() {
+                                updateButtonColors(d3.select(this), d3.select(this.parentNode));
+                            })
                             .on("click",function(d,i) {
                                 updateButtonColors(d3.select(this), d3.select(this.parentNode));
 
@@ -115,7 +122,7 @@ function drawHOS(svg)
         .attr("width", hos_bWidth-10)
         .attr("height", hos_bHeight-10);
 
-    function updateButtonColors(button, parent) {
+    function updateButtonColors(button, parent, hover=false) {
         if  (hos_lastButton == null){
             hos_lastButton = button;
         }
@@ -125,11 +132,17 @@ function drawHOS(svg)
                 .style("stroke-width", hos_borderWidth);
         }
 
+        if (hover==true)
+            borderColor = hos_hoverBorderColor;
+        else
+            borderColor = hos_focusBorderColor;
+
         button.select("rect")
-                .style("stroke",hos_focusBorderColor)
+                .style("stroke",borderColor)
                 .style("stroke-width", hos_focusBorderWidth);
 
         // save the last button
         hos_lastButton = button;
     }
+
 }
