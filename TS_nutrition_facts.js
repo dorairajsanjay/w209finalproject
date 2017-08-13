@@ -151,9 +151,9 @@ pic.update = function(data, criteria) {
           // Highlight the criteria of main interest
 
           if (data["selected"] === 1) {
-              highlight_color = "#3399ff"; // blue for selected
+              highlight_color = "#e0b211"; // gold for selected
           } else {
-              highlight_color = "#33cc33"; // green for recommended
+              highlight_color = "#3399ff"; // blue for recommended
           };
 
           svg.append("rect")
