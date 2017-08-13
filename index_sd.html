@@ -33,12 +33,13 @@
     h1.hidden {
         visibility: hidden;
     }
+    body {
+        height: 100%;
+        }
 	body {
-        background-image: url("http://localhost:8000/1920x1200-mint-cream-solid-color-background.png"); 
-        height:50%;
-        width:80%;
-        position:absolute;
-        background-size:cover;
+        background-image: url("http://localhost:8000/betterfood-background.png"); 
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
 	}
         .main_button {
             background-color: #999999;
@@ -119,10 +120,11 @@
 
     </style>
 
- <h1 class="hidden" align="center">Better Food Choices</h1>
-
        <body>
       <table  width= "1200" border = "0">
+        <tr>
+            <td colspan = 4><img src="http://localhost:8000/betterfood_toppanel.png" alt="" border=0 height=100 width=1220></img></td>
+        </tr>
 
          <tr valign = "top" >
             <td id="hos-panel"  width = "760" height = "140">
@@ -190,6 +192,10 @@
                 </table>
             </td>
         </table>
+        </tr>
+
+        <tr>
+            <td colspan = 4><img src="http://localhost:8000/betterfood_bottompanel.png" alt="" border=0 height=150 width=1220></img></td>
         </tr>
       <table>
    </body>
