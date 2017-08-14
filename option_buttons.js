@@ -8,15 +8,15 @@ function getMeasure(id)
 
     // look to see which one changed
     if (id == "fat")
-        viewOption = "fat_100g";
+        viewOption = "fat_svg";
     else if (id == "sugars")
-        viewOption = "sugars_100g";
+        viewOption = "sugars_svg";
     else if (id == "proteins")
-        viewOption = "proteins_100g";
+        viewOption = "proteins_svg";
     else if (id == "sodium")
-        viewOption = "sodium_100g";
+        viewOption = "sodium_svg";
     else if (id == "fiber")
-        viewOption = "fiber_100g";
+        viewOption = "fiber_svg";
 
     return viewOption;
 }
@@ -102,7 +102,7 @@ function optionButtonSelected(id){
     {
         $("#chart1").empty();
         $("#nutfacts_panel").empty();
-        
+
         var uc2=nutrition_facts("#nutfacts_panel")
         var uc1=bar_chart("#chart1", measure);
 

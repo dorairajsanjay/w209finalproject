@@ -26,11 +26,11 @@ var frame = d3.select(eleID),
 var leftMargin = margin.left;
 
 // Specify units of measure for fields
-var unit_specs = {"fat_100g": {unit : "g", factor: 1},
-                  "sugars_100g": {unit : "g", factor:1},
-                  "proteins_100g": {unit : "g", factor:1},
-                  "sodium_100g": {unit : "mg", factor:1000},
-                  "fiber_100g": {unit : "g", factor:1},
+var unit_specs = {"fat_svg": {unit : "g", factor: 1},
+                  "sugars_svg": {unit : "g", factor:1},
+                  "proteins_svg": {unit : "g", factor:1},
+                  "sodium_svg": {unit : "mg", factor:1000},
+                  "fiber_svg": {unit : "g", factor:1},
                  };
 
 
@@ -73,7 +73,7 @@ pic.update = function(data, measure) {
 
 	//Sort the measure
     data.sort(function(a, b) {
-		if (measure=="proteins_100g" || measure=="fiber_100g") {
+		if (measure=="proteins_svg" || measure=="fiber_svg") {
         return a[measure] - b[measure]}
 		return b[measure] - a[measure];
       });
@@ -191,8 +191,6 @@ function type(d) {
 
           // Calc number of lines needed -- not an elegant approach
           var lines_needed = Math.floor(text.text().length / 27) + 1;
-          console.log(lines_needed, text.text());
-
           var words = text.text().split(/\s+/).reverse(),
             word,
             line = [],
@@ -215,23 +213,7 @@ function type(d) {
                                   3: {1:-0.7, 2:0.95, 3:1.05}
                                   };
 
-            console.log(offsets[lines_needed]);
-            console.log(offsets[lines_needed][1]);
-
-
             tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", offsets[lines_needed][1] + "em");
-
-
-          // Have to calculate ahead of time how many lines we are going to need in order to
-          // correctly get offsets from the mid point both up and down as
-          // necessary
-
-          // Could do this algorithmically but don't want more than 3 line
-          // wraps anyway and may want fine control over each offset
-
-
-          console.log(offsets[lines_needed]);
-          console.log(offsets[lines_needed][1]);
 
           // iterate through and append text with correct offsets
           while (word = words.pop()) {
@@ -296,7 +278,7 @@ function find_and_rank_comparables(data, productid, criteria) {
     // Now sort the objects based on the specified criteria
     filtered.sort(function(a, b) {
 		console.log(criteria)
-		if (criteria=="proteins_100g" || criteria=="fiber_100g") {
+		if (criteria=="proteins_svg" || criteria=="fiber_svg") {
         return parseFloat(b[criteria]) - parseFloat(a[criteria])}
 		return parseFloat(a[criteria]) - parseFloat(b[criteria]);
       });
