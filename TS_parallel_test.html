@@ -40,10 +40,10 @@ svg {
 
 <script>
 var uc1=parallel_chart("#chart1");
-d3.csv("demo_food_data.csv", function(error, data) {
+d3.csv("demo_food_data_sd_regularized_columns.csv", function(error, data) {
   if (error) throw error;
 //  filtered = get_comparables(data, "cereal")
-  filtered = find_and_rank_comparables(data, "42400240815", "sugars_100g");
+  filtered = find_and_rank_comparables(data, "42400240815", "fat");
   uc1.update(filtered);
   });
 
