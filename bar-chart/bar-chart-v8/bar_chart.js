@@ -26,11 +26,11 @@ var frame = d3.select(eleID),
 var leftMargin = margin.left;
 
 // Specify units of measure for fields
-var unit_specs = {"fat_100g": {unit : "g", factor: 1},
-                  "sugars_100g": {unit : "g", factor:1},
-                  "proteins_100g": {unit : "g", factor:1},
-                  "sodium_100g": {unit : "mg", factor:1000},
-                  "fiber_100g": {unit : "g", factor:1},
+var unit_specs = {"fat": {unit : "g", factor: 1},
+                  "sugars": {unit : "g", factor:1},
+                  "proteins": {unit : "g", factor:1},
+                  "sodium": {unit : "mg", factor:1000},
+                  "fiber": {unit : "g", factor:1},
                  };
 
 
@@ -73,7 +73,7 @@ pic.update = function(data, measure) {
 
 	//Sort the measure
     data.sort(function(a, b) {
-		if (measure=="proteins_100g" || measure=="fiber_100g") {
+		if (measure=="proteins" || measure=="fiber") {
         return a[measure] - b[measure]}
 		return b[measure] - a[measure];
       });
@@ -296,7 +296,7 @@ function find_and_rank_comparables(data, productid, criteria) {
     // Now sort the objects based on the specified criteria
     filtered.sort(function(a, b) {
 		console.log(criteria)
-		if (criteria=="proteins_100g" || criteria=="fiber_100g") {
+		if (criteria=="proteins" || criteria=="fiber") {
         return parseFloat(b[criteria]) - parseFloat(a[criteria])}
 		return parseFloat(a[criteria]) - parseFloat(b[criteria]);
       });
