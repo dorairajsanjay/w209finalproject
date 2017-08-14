@@ -46,11 +46,11 @@ pic.update = function(data) {
     // specify which fields we want to draw, and what direction is good
     // -1 means lower is better, +1 means higher is better
 
-    var wanted = {"fat_100g": -1,
-                  "sugars_100g": -1,
-                  "proteins_100g": +1,
-                  "sodium_100g": -1,
-                  "fiber_100g": +1,
+    var wanted = {"fat": -1,
+                  "sugars": -1,
+                  "proteins": +1,
+                  "sodium": -1,
+                  "fiber": +1,
                   };
 
     var bad = {};
