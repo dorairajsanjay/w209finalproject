@@ -29,12 +29,12 @@
 <body>
 <div>
 <form id="measureOptions" name="measureOptions">
-  <input value="fat_100g" type="radio" name="measure" checked>Fat
-  <input value="energy_100g" type="radio" name="measure">Calories
-  <input value="sodium_100g" type="radio" name="measure">Sodium
-  <input value="sugars_100g" type="radio" name="measure">Sugar
-  <input value="cholesterol_100g" type="radio" name="measure">Cholesterol
-  <input value="proteins_100g" type="radio" name="measure">Protein
+  <input value="fat" type="radio" name="measure" checked>Fat
+  <input value="energy" type="radio" name="measure">Calories
+  <input value="sodium" type="radio" name="measure">Sodium
+  <input value="sugars" type="radio" name="measure">Sugar
+  <input value="cholesterol" type="radio" name="measure">Cholesterol
+  <input value="proteins" type="radio" name="measure">Protein
 </form>
 </div>
 
@@ -48,7 +48,7 @@
 
 
 <script>
-var measure="fiber_100g";
+var measure="fiber";
 
 var measureOptions = document.getElementById('measureOptions');
 measureOptions.onclick = function(i) {        
