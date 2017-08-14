@@ -25,6 +25,14 @@ var frame = d3.select(eleID),
 
 var leftMargin = margin.left;
 
+// Specify units of measure for fields
+var unit_specs = {"fat_100g": {unit : "g", factor: 1},
+                  "sugars_100g": {unit : "g", factor:1},
+                  "proteins_100g": {unit : "g", factor:1},
+                  "sodium_100g": {unit : "mg", factor:1000},
+                  "fiber_100g": {unit : "g", factor:1},
+                 };
+
 
 //Should change on button click
 var measure = measure;
@@ -55,6 +63,9 @@ var yAxis = d3.axisLeft(y);
 var svg = frame
 		.append("g")
 		  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+
 
 
 // Main method that can be called to draw the bar chart
@@ -133,7 +144,7 @@ pic.update = function(data, measure) {
                                       .attr("font-size", "12px")
                                       .attr("font-weight", "bold")
                                       .attr("fill", "black")
-                                      .text(formatter(d[measure]));
+                                      .text(formatter(d[measure]*unit_specs[measure].factor)+unit_specs[measure].unit);
                               })
                               //Transition on mouseout
                               .on("mouseout", function(d, i) {
