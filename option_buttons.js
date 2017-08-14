@@ -8,15 +8,15 @@ function getMeasure(id)
 
     // look to see which one changed
     if (id == "fat")
-        viewOption = "fat_100g";
+        viewOption = "fat";
     else if (id == "sugars")
-        viewOption = "sugars_100g";
+        viewOption = "sugars";
     else if (id == "proteins")
-        viewOption = "proteins_100g";
+        viewOption = "proteins";
     else if (id == "sodium")
-        viewOption = "sodium_100g";
+        viewOption = "sodium";
     else if (id == "fiber")
-        viewOption = "fiber_100g";
+        viewOption = "fiber";
 
     return viewOption;
 }

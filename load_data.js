@@ -20,7 +20,7 @@ function loadUSDAData(evt) {
             $("#chart1").empty();
             $("#nutfacts_panel").empty();
 
-            var measure = "fat_100g";
+            var measure = "fat";
 
             var uc1=bar_chart("#chart1", measure);
             var uc2=nutrition_facts("#nutfacts_panel")
