@@ -124,8 +124,9 @@ pic.update = function(data, criteria) {
         serving = parseFloat(data.serving_size.substring(0, data.serving_size.indexOf("g")));
         serv_factor = serving / 100
 
-        // Specify y position of the different fields and lines
-        var text_specs = {"energy_100g": {y :110 , desc : "Calories", unit : "cal", main : 1, factor:1},
+
+        // Specify y position of the different fields and lines.  Also units and display conversion factors
+        var text_specs = {"energy_100g": {y :110 , desc : "Calories", unit : "cal", main : 1, factor:0.239},
                           "fat_100g": {y :170, desc : "Total Fat", unit : "g", main : 1, factor:1},
                           "cholesterol_100g": {y :200, desc : "Cholesterol", unit : "mg", main : 1, factor:1000},
                           "carbohydrates_100g": {y :260, desc : "Total Carbohydrates", unit : "g", main : 1, factor:1},
