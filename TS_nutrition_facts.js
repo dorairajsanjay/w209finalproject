@@ -126,14 +126,14 @@ pic.update = function(data, criteria) {
 
 
         // Specify y position of the different fields and lines.  Also units and display conversion factors
-        var text_specs = {"energy_100g": {y :110 , desc : "Calories", unit : "cal", main : 1, factor:0.239},
-                          "fat_100g": {y :170, desc : "Total Fat", unit : "g", main : 1, factor:1},
-                          "cholesterol_100g": {y :200, desc : "Cholesterol", unit : "mg", main : 1, factor:1000},
-                          "carbohydrates_100g": {y :260, desc : "Total Carbohydrates", unit : "g", main : 1, factor:1},
-                          "sugars_100g": {y :320, desc : "Sugars", unit : "g", main : 1, factor:1},
-                          "proteins_100g": {y :350, desc : "Protein", unit : "g", main : 1, factor:1},
-                          "sodium_100g": {y :230, desc : "Sodium", unit : "mg", main : 1, factor:1000},
-                          "fiber_100g": {y :290, desc : "Dietary Fiber", unit : "g", main : 1, factor:1},
+        var text_specs = {"energy": {y :110 , desc : "Calories", unit : "cal", main : 1, factor:0.239},
+                          "fat": {y :170, desc : "Total Fat", unit : "g", main : 1, factor:1},
+                          "cholesterol": {y :200, desc : "Cholesterol", unit : "mg", main : 1, factor:1000},
+                          "carbohydrates": {y :260, desc : "Total Carbohydrates", unit : "g", main : 1, factor:1},
+                          "sugars": {y :320, desc : "Sugars", unit : "g", main : 1, factor:1},
+                          "proteins": {y :350, desc : "Protein", unit : "g", main : 1, factor:1},
+                          "sodium": {y :230, desc : "Sodium", unit : "mg", main : 1, factor:1000},
+                          "fiber": {y :290, desc : "Dietary Fiber", unit : "g", main : 1, factor:1},
                          };
 
          var line_specs = { 1: {y :60 , main : 7},
@@ -220,11 +220,11 @@ pic.update = function(data, criteria) {
                 .text(text_specs[key].desc + " " + (data[key]*serv_factor*text_specs[key].factor).toFixed(0) + " " + text_specs[key].unit);
             };
 
-        var rda_specs = { "fat_100g": {y :170, rda: 65},
-                          "cholesterol_100g": {y :200, rda: 300},
-                          "carbohydrates_100g": {y :260, rda: 300},
-                          "sodium_100g": {y :230, rda:2.4},
-                          "fiber_100g": {y :290, rda:25},
+        var rda_specs = { "fat": {y :170, rda: 65},
+                          "cholesterol": {y :200, rda: 300},
+                          "carbohydrates": {y :260, rda: 300},
+                          "sodium": {y :230, rda:2.4},
+                          "fiber": {y :290, rda:25},
                       };
 
         // Add RDA values for fields where those apply
