@@ -15,7 +15,7 @@ var frame = d3.select(eleID),
         top: 20,
         right: 80,
         bottom: 30,
-        left: 150},
+        left: 180},
     width = 600 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom,
     maxBarWidth= height - margin.left,
@@ -110,8 +110,10 @@ pic.update = function(data, measure) {
           .call(yAxis)
 			  .selectAll(".tick text")
 					.attr("stroke", "none")
-					.attr("fill", "black")
-					.call(wrap, leftMargin - label_offset);
+					.attr("fill", "#131516")  // very dark gray, but not black) "#131516"
+                    .attr("font-weight", "bold")
+					.call(wrap_bar, leftMargin - label_offset);
+
 
         //Set attributes of SVG rects based
         var rectAttributes = rects
@@ -170,27 +172,68 @@ function type(d) {
      return d;
     }
 
-//Label wrap function from "Wrapping Long Labels" - Mike Bostock
- function wrap(text, width) {
+//Label wrap function adapted from "Wrapping Long Labels" - Mike Bostock
+ function wrap_bar(text, width) {
         text.each(function() {
-          var text = d3.select(this),
-            words = text.text().split(/\s+/).reverse(),
+
+          var text = d3.select(this);
+
+          // Calc number of lines needed -- not an elegant approach
+          var lines_needed = Math.floor(text.text().length / 27) + 1;
+          console.log(lines_needed, text.text());
+
+          var words = text.text().split(/\s+/).reverse(),
             word,
             line = [],
-            lineNumber = 0,
+            lineNumber = 1,
             lineHeight = 1, //em
             y = text.attr("y"),
 			x = text.attr("x"),
-            dy = parseFloat(text.attr("dy")),
-            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+            dy = parseFloat(text.attr("dy"));
+
+            // Have to calculate ahead of time how many lines we are going to need in order to
+            // correctly get offsets from the mid point both up and down as
+            // necessary
+
+            // Could do this algorithmically but don't want more than 3 line
+            // wraps anyway and may want fine control over each offset
+
+            // defined as em offsets
+            var offsets = { 1: {1:0.32},
+                                  2: {1:-0.25, 2:0.9},
+                                  3: {1:-0.7, 2:0.95, 3:1.05}
+                                  };
+
+            console.log(offsets[lines_needed]);
+            console.log(offsets[lines_needed][1]);
+
+
+            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", offsets[lines_needed][1] + "em");
+
+
+          // Have to calculate ahead of time how many lines we are going to need in order to
+          // correctly get offsets from the mid point both up and down as
+          // necessary
+
+          // Could do this algorithmically but don't want more than 3 line
+          // wraps anyway and may want fine control over each offset
+
+
+          console.log(offsets[lines_needed]);
+          console.log(offsets[lines_needed][1]);
+
+          // iterate through and append text with correct offsets
           while (word = words.pop()) {
             line.push(word);
             tspan.text(line.join(" "));
             if (tspan.node().getComputedTextLength() > width) {
               line.pop();
+              lineNumber++;
               tspan.text(line.join(" "));
               line = [word];
-              tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+              tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", offsets[lines_needed][lineNumber] + "em").text(word);
+
+            //   tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
             }
           }
         })
