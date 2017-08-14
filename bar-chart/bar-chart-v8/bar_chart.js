@@ -26,19 +26,11 @@ var frame = d3.select(eleID),
 var leftMargin = margin.left;
 
 // Specify units of measure for fields
-<<<<<<< HEAD
 var unit_specs = {"fat_svg": {unit : "g", factor: 1},
                   "sugars_svg": {unit : "g", factor:1},
                   "proteins_svg": {unit : "g", factor:1},
                   "sodium_svg": {unit : "mg", factor:1000},
                   "fiber_svg": {unit : "g", factor:1},
-=======
-var unit_specs = {"fat": {unit : "g", factor: 1},
-                  "sugars": {unit : "g", factor:1},
-                  "proteins": {unit : "g", factor:1},
-                  "sodium": {unit : "mg", factor:1000},
-                  "fiber": {unit : "g", factor:1},
->>>>>>> e2923411c211ff8df752dbfe6d115eafd02d576d
                  };
 
 
@@ -81,11 +73,7 @@ pic.update = function(data, measure) {
 
 	//Sort the measure
     data.sort(function(a, b) {
-<<<<<<< HEAD
 		if (measure=="proteins_svg" || measure=="fiber_svg") {
-=======
-		if (measure=="proteins" || measure=="fiber") {
->>>>>>> e2923411c211ff8df752dbfe6d115eafd02d576d
         return a[measure] - b[measure]}
 		return b[measure] - a[measure];
       });
