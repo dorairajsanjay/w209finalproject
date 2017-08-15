@@ -15,8 +15,8 @@ var nut_frame = d3.select(eleID),
     width = +nut_frame.attr("width"),
     height = +nut_frame.attr("height");
 
-var side_padding = 30,
-    vert_padding = 10
+var side_padding = 15,
+    vert_padding = 10,
     top_row_height = 100;
 
 
@@ -81,7 +81,7 @@ pic.update = function(data, criteria) {
     // Draw the actual Nutrition Facts boxes
 
     draw_nf(nut_frame, side_padding, top_row_height + vert_padding, selected);
-    draw_nf(nut_frame, width/2 + side_padding, top_row_height + vert_padding, recommended);
+    draw_nf(nut_frame, width - side_padding - 240, top_row_height + vert_padding, recommended);
 
 
     function draw_nf(svg, x, y, data){

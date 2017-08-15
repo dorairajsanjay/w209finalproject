@@ -18,7 +18,7 @@ function drawHOS(svg)
     var hos_borderColor = "#999999";
     //var hos_focusBorderColor = "#3399ff";
     var hos_focusBorderColor = "gray";
-    var hos_focusBorderWidth = 10;
+    var hos_focusBorderWidth = 5;
     var hos_hoverBorderColor = "#0071BC";
 
     // filter elements from product set for HOS panel
@@ -93,20 +93,20 @@ function drawHOS(svg)
                 .attr("x",function(d,i) {return hos_x0+(hos_bWidth+hos_bSpace)*i;})
                 .attr("y",hos_y0)
                 .attr("border",hos_borderWidth)
-                .style("stroke", function(d,i) { 
-                                                if(i==0) 
+                .style("stroke", function(d,i) {
+                                                if(i==0)
                                                     return hos_focusBorderColor;
-                                                 else 
+                                                 else
                                                     return hos_borderColor;
                                                 })
                 .style("fill", "none")
-                .style("stroke-width", function(d,i) { 
-                                        if(i==0) 
+                .style("stroke-width", function(d,i) {
+                                        if(i==0)
                                         {
                                              hos_lastButton = d3.select(this.parentNode);
                                              return hos_focusBorderWidth;
                                         }
-                                        else 
+                                        else
                                             return hos_borderWidth;
                                     })
                 .style("background-color","red");
