@@ -233,7 +233,7 @@ return pic;
 
 function get_parallel_color(d) {
     if (d.selected === 1) {
-        return "#e0b211"; // gold
+        return "#efc42a"; // gold
     } else if (d.recommended === 1) {
         return "#3399ff"; // blue
     } else {

@@ -88,7 +88,7 @@ pic.update = function(data, criteria) {
 
         // Specify parameters for the text box
 
-        var side_padding = 4,
+        var side_padding = 1,
             vert_padding = 10,
             box_width = 240,
             box_height = 380,
@@ -147,7 +147,7 @@ pic.update = function(data, criteria) {
           // Highlight the criteria of main interest
 
           if (data["selected"] === 1) {
-              highlight_color = "#e0b211"; // gold for selected
+              highlight_color = "#efc42a"; // gold for selected
           } else {
               highlight_color = "#3399ff"; // blue for recommended
           };

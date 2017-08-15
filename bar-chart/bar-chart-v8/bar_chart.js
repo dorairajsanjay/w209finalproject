@@ -101,7 +101,7 @@ pic.update = function(data, measure) {
 			return "#3399ff";
 			}
 			else if (d.selected == 1) {
-			return "#e0b211";
+			return "#efc42a";
 			}
 			return "#999999";
 			});
@@ -156,7 +156,7 @@ pic.update = function(data, measure) {
 											return "#3399ff";
 										}
 										else if (d.selected == 1) {
-											return "#e0b211";
+											return "#efc42a";
 										}
 										return "#999999";
 									});
