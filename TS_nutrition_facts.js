@@ -17,7 +17,8 @@ var nut_frame = d3.select(eleID),
 
 var side_padding = 15,
     vert_padding = 10,
-    top_row_height = 100;
+    top_row_height = 100
+    box_width = 240;
 
 
 
@@ -37,7 +38,7 @@ pic.update = function(data, criteria) {
         .attr("text-anchor", "middle")
         .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
         .attr("font-weight", "bold")
-        .attr("x", width * 0.25)
+        .attr("x", side_padding + box_width/2)
         .attr("y", 50)
         .attr("dx", 0)
         .attr("dy", 10)
@@ -50,7 +51,7 @@ pic.update = function(data, criteria) {
         .attr("text-anchor", "middle")
         .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
         .attr("font-weight", "bold")
-        .attr("x", width * 0.75)
+        .attr("x", width - box_width/2 - side_padding)
         .attr("y", 50)
         .attr("dx", 0)
         .attr("dy", 10)
@@ -63,7 +64,7 @@ pic.update = function(data, criteria) {
         .attr("text-anchor", "middle")
         .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
         .attr("font-weight", "bold")
-        .attr("x", width * 0.25)
+        .attr("x", side_padding + box_width/2)
         .attr("y", 30)
         .text("consider replacing...");
 
@@ -73,7 +74,7 @@ pic.update = function(data, criteria) {
         .attr("text-anchor", "middle")
         .attr("fill", "#131516")  // very dark gray, but not black) "#131516"
         .attr("font-weight", "bold")
-        .attr("x", width * 0.75)
+        .attr("x", width - box_width/2 - side_padding)
         .attr("y", 30)
         .text("...with...");
 
@@ -81,7 +82,7 @@ pic.update = function(data, criteria) {
     // Draw the actual Nutrition Facts boxes
 
     draw_nf(nut_frame, side_padding, top_row_height + vert_padding, selected);
-    draw_nf(nut_frame, width - side_padding - 240, top_row_height + vert_padding, recommended);
+    draw_nf(nut_frame, width - side_padding - box_width, top_row_height + vert_padding, recommended);
 
 
     function draw_nf(svg, x, y, data){
