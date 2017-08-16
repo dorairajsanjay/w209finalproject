@@ -27,6 +27,75 @@
             selected_submenu_button :null,
     };
     </script>
+
+
+    <script>
+        var url = "http://localhost:8000/demo_food_data_latest.csv";
+        // var url = "http://localhost:8000/demo_food_data_sd_regularized_columns.csv";
+
+        // bfc stands for better food choices
+        var bfc_context = {
+            selected_topmenu_button :null,
+            selected_submenu_button :null,
+    };
+    </script>
+
+    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script  type="text/javascript" src="http://localhost:8000/libs/typeahead.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $('input.typeahead').typeahead({
+            name: 'product_name',
+            remote: 'http://localhost:3000/search?key=%QUERY',
+            limit: 10
+        });
+    });
+    </script>
+    <style type="text/css">
+    .search-text-div{
+        font-family: sans-serif;
+        position: relative;
+        margin: 0px;
+    }
+    .typeahead, .tt-query, .tt-hint {
+        width:0px;
+        height:0px;
+    }
+    .typeahead {
+        background-color: #FFFFFF;
+    }
+    .typeahead:focus {
+        border: 0px solid #0097CF;
+    }
+    .tt-query {
+        box-shadow: none;
+    }
+    .tt-hint {
+        color: #999999;
+    }
+    .tt-dropdown-menu {
+        background-color: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        margin-top: 12px;
+        padding: 8px 0;
+        width: 422px;
+    }
+    .tt-suggestion {
+        font-size: 24px;
+        line-height: 24px;
+        padding: 3px 20px;
+    }
+    .tt-suggestion.tt-is-under-cursor {
+        background-color: #0097CF;
+        color: #FFFFFF;
+    }
+    .tt-suggestion p {
+        margin: 0;
+    }
+    </style>
 </head>
 
 
@@ -142,16 +211,17 @@
                     </tr>
                     <tr>
                     <td>
-                        <input style="font-weight:bold;font-size:18px;font-family:sans-serif;border-width:4px;border-style:solid;border-color:gray;width:440px;height:30px" type="text" id="search-text" placeholder="...">
-                        <div id="filteredList"></div>
-                        <script src="search_panel.js"></script>
-                        <script>
-                            var data;
-                            loadUSDAData();
-                        </script>
+                        <div class="search-text-div">
+                        <input  id="search-text" style="font-weight:bold;font-size:20px;font-family:sans-serif;border-width:5px;border-style:solid;border-color:gray;width:440px;height:30px" type="text" name="typeahead" class="typeahead tt-query" autocomplete="off" spellcheck="false" placeholder="Enter product name...">
+                        </div>
                     </td>
                     </tr>
                 </table>
+                <script src="http://localhost:8000/search_panel.js"></script>
+                <script>
+                    var data;
+                    loadUSDAData();
+                </script>
             </td>
          </tr>
         <tr>
