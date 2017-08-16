@@ -8,8 +8,6 @@ function processSearchKey(){
 
     filterText = d3.select('#search-text').property('value');
     if (keyCode == 13) {
-            // clear the list of items
-            d3.select('#filteredList').html("");
 
             // initialize left charts panel
             filtered = find_and_rank_comparables(data.data, onFilter(filterText,false), getMeasure(bfc_context.selected_submenu_button.id));
@@ -42,9 +40,9 @@ function processSearchKey(){
                 alert("In advanced polygon chart - sorry, this is not yet implemented.");
             } 
     }
-    else{
-        onFilter(filterText);
-    }
+    //else{
+    //    onFilter(filterText);
+   // }
     
 }
 
