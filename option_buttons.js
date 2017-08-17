@@ -154,26 +154,41 @@ function optionButtonSelected(id){
         //{"area": "Sodium ", "value": 0},  // max 1
         //{"area": "Fiber ", "value": 0},   // max 10.7
 
-        var maxFat      =  31.25;
-        var maxSugars   = 55.56;
-        var maxProteins = 13.33;
-        var maxSodium   = 1;
-        var maxFiber    = 10.7;
+        // determine max values for fat, sugars and so on
 
-        radarData[0][0]["value"] = (maxFat - selected["fat_100g"])/maxFat*100;
-        radarData[0][1]["value"] = (maxSugars-selected["sugars_100g"])/maxSugars*100;
-        radarData[0][2]["value"] = (maxProteins-selected["proteins_100g"])/maxProteins*100;
-        radarData[0][3]["value"] = (maxSodium-selected["sodium_100g"])/maxSodium*100;
-        radarData[0][4]["value"] = (maxFiber-selected["fiber_100g"])/maxFiber*100;
-        
+        var maxFat      = 0;
+        var maxSugars   = 0;
+        var maxProteins = 0;
+        var maxSodium   = 0;
+        var maxFiber    = 0;
+
+        for (i=0;i<data.data.length;i++)
+        {
+            if ( data.data[i]["fat_svg"] > maxFat )
+                maxFat = data.data[i]["fat_svg"];
+            if ( data.data[i]["sugars_svg"] > maxSugars )
+                maxSugars = data.data[i]["sugars_svg"];
+            if ( data.data[i]["proteins_svg"] > maxProteins )
+                maxProteins = data.data[i]["proteins_svg"];
+            if ( data.data[i]["sodium_svg"] > maxSodium )
+                maxSodium = data.data[i]["sodium_svg"];
+            if ( data.data[i]["fiber_svg"] > maxFiber )
+                maxFiber = data.data[i]["fiber_svg"];
+        }
+
+        radarData[0][0]["value"] = (maxFat - selected["fat_svg"])/maxFat*100;
+        radarData[0][1]["value"] = (maxSugars-selected["sugars_svg"])/maxSugars*100;
+        radarData[0][2]["value"] = (maxProteins-selected["proteins_svg"])/maxProteins*100;
+        radarData[0][3]["value"] = (maxSodium-selected["sodium_svg"])/maxSodium*100;
+        radarData[0][4]["value"] = (maxFiber-selected["fiber_svg"])/maxFiber*100;
         
         recommended = extract_one(data.data, "recommended");
 
-        radarData[1][0]["value"] = (maxFat - recommended["fat_100g"])/maxFat*100;
-        radarData[1][1]["value"] = (maxSugars-recommended["sugars_100g"])/maxSugars*100;
-        radarData[1][2]["value"] = (maxProteins-recommended["proteins_100g"])/maxProteins*100;
-        radarData[1][3]["value"] = (maxSodium-recommended["sodium_100g"])/maxSodium*100;
-        radarData[1][4]["value"] = (maxFiber-recommended["fiber_100g"])/maxFiber*100;
+        radarData[1][0]["value"] = (maxFat - recommended["fat_svg"])/maxFat*100;
+        radarData[1][1]["value"] = (maxSugars-recommended["sugars_svg"])/maxSugars*100;
+        radarData[1][2]["value"] = (maxProteins-recommended["proteins_svg"])/maxProteins*100;
+        radarData[1][3]["value"] = (maxSodium-recommended["sodium_svg"])/maxSodium*100;
+        radarData[1][4]["value"] = (maxFiber-recommended["fiber_svg"])/maxFiber*100;
 
         RadarChart.draw("#chart1", radarData, config);
 
