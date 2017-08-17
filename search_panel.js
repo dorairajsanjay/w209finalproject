@@ -37,7 +37,27 @@ function processSearchKey(){
 
             }
             else{
-                alert("In advanced polygon chart - sorry, this is not yet implemented.");
+                // force back to simple view
+                bfc_context.selected_topmenu_button = document.getElementById("sv");
+                bfc_context.selected_topmenu_button.classList.remove("inactive");
+                bfc_context.selected_topmenu_button.classList.add("active");
+
+                document.getElementById("av-polygon").classList.remove("active");
+                document.getElementById("av-polygon").classList.add("inactive");
+
+                $('#measure-buttons').show();
+
+                $("#chart1").empty();
+                $("#nutfacts_panel").empty();
+
+                var uc2=nutrition_facts("#nutfacts_panel")
+                var uc1=bar_chart("#chart1");
+                // var uc1=bar_chart("#chart1", getMeasure(bfc_context.selected_submenu_button.id));
+                console.log(filtered);
+                console.log(getMeasure(bfc_context.selected_submenu_button.id));
+
+                uc1.update(filtered, getMeasure(bfc_context.selected_submenu_button.id));
+                uc2.update(filtered, getMeasure(bfc_context.selected_submenu_button.id));
             } 
     }
     //else{
