@@ -28,9 +28,9 @@ function loadUSDAData(evt) {
             var measure = "fat_svg";
 
             var uc1=bar_chart("#chart1", measure);
-            var uc2=nutrition_facts("#nutfacts_panel")
+            var uc2=nutrition_facts("#nutfacts_panel");
 
-            filtered = find_and_rank_comparables(data.data, "713733903387", measure);
+            filtered = find_and_rank_comparables(data.data, "N713733903387", measure);
 
             console.log(filtered);
 
