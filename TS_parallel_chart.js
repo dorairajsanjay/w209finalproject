@@ -90,14 +90,14 @@ pic.update = function(data) {
         .attr("class", "axis_heading")
         .attr("dy", axis_label_offset)
         .attr("stroke", "none")
-        .attr("font-size", "14px")
+        .attr("font-size", 12)
         .attr("font-weight", "bold")
         .attr("transform", "translate(0,"+margin.top+") rotate(0)");
 
     // Style the main axis lines
     g.selectAll("path")
-        .style("stroke", "#bdbdbd")  // mid gray
-        .style("stroke-width", 5)
+        .style("stroke", "#d9d9d9")  // light gray
+        .style("stroke-width", 3)
 
     // Style the axis tick mark lines
     g.selectAll("line")
@@ -107,11 +107,13 @@ pic.update = function(data) {
 
     // Style the axis tick labels and heading
     g.selectAll("text")
-        .style("fill", "#bdbdbd") // mid gray
+        .style("fill", "#d9d9d9") // light gray
+        .attr("font-size", 12)
 
     // Style the axis heading
     g.selectAll(".axis_heading")
         .style("fill", "#131516") // very dark gray, but not black
+        .attr("font-size", 16)        
 
     // Add text explanation of better and worse directions
 
