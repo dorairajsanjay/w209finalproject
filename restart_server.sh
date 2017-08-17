@@ -1,3 +1,9 @@
+# to be executed using the below command
+# nohup sh restart_server.sh &
+
+### NOTE THAT THIS SCRIPT DOES NOT WORK ON MAC OS ###
+
+# script to restart node process in the event of a failure
 le [ 1 ]
 do
     sleep 1

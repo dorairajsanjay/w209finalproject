@@ -1,1 +1,4 @@
 nohup: Server.js: No such file or directory
+restart_server.sh: line 5: le: command not found
+restart_server.sh: line 6: syntax error near unexpected token `do'
+restart_server.sh: line 6: `do'
